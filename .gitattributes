@@ -1,0 +1,5 @@
+# Normalise line endings: LF in the repo, so Windows and Render (Linux) agree.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary

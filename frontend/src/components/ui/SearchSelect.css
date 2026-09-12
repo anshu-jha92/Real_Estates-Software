@@ -1,0 +1,191 @@
+.rk-ss {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ---------- Trigger ---------- */
+
+.rk-ss__trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px 10px 16px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-white);
+  color: var(--rk-ink);
+  font-family: var(--rk-font-body);
+  font-size: .94rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--rk-t), box-shadow var(--rk-t), background-color var(--rk-t);
+}
+
+.rk-ss__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rk-ss__value.is-placeholder { color: var(--rk-muted); }
+
+.rk-ss__caret {
+  flex: none;
+  font-size: 1.25rem;
+  color: var(--rk-muted);
+  transition: transform var(--rk-t);
+}
+
+.rk-ss.is-open .rk-ss__caret { transform: rotate(180deg); }
+
+.rk-ss__trigger:hover { border-color: var(--rk-gold-400); }
+
+.rk-ss__trigger:focus-visible,
+.rk-ss.is-open .rk-ss__trigger {
+  outline: none;
+  border-color: var(--rk-gold-500);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, .28);
+}
+
+.rk-ss.is-disabled .rk-ss__trigger {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* ---------- Glass variant (dark hero) ---------- */
+
+.rk-ss--glass .rk-ss__trigger {
+  border-color: rgba(235, 215, 154, .32);
+  background: rgba(255, 255, 255, .1);
+  color: var(--rk-white);
+}
+
+.rk-ss--glass .rk-ss__value.is-placeholder { color: rgba(255, 255, 255, .72); }
+.rk-ss--glass .rk-ss__caret { color: var(--rk-gold-300); }
+.rk-ss--glass .rk-ss__trigger:hover { background: rgba(255, 255, 255, .16); }
+
+/* ---------- Panel ---------- */
+
+.rk-ss__panel {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  min-width: 220px;
+  /* Never taller than the shortest place it has to fit. */
+  max-height: 268px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-lg);
+  animation: rkSsIn .16s var(--rk-ease);
+}
+
+@keyframes rkSsIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Not enough room below the field — open upward instead of running off-screen. */
+.rk-ss.is-up .rk-ss__panel {
+  top: auto;
+  bottom: calc(100% + 6px);
+  animation-name: rkSsInUp;
+}
+
+@keyframes rkSsInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.rk-ss__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rk-line);
+  color: var(--rk-muted);
+}
+
+.rk-ss__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--rk-ink);
+  font-family: var(--rk-font-body);
+  font-size: .92rem;
+}
+
+.rk-ss__input:focus { outline: none; }
+.rk-ss__input::placeholder { color: var(--rk-muted); }
+
+/* ---------- Options ---------- */
+
+/* Deliberately short: ~5 rows visible, the rest scrolls. A tall panel spills
+   over the section below the hero, where it gets painted over. */
+.rk-ss__list {
+  max-height: 196px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  overscroll-behavior: contain;
+}
+
+.rk-ss__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: var(--rk-r-sm);
+  color: var(--rk-body);
+  font-size: .92rem;
+  cursor: pointer;
+}
+
+.rk-ss__option.is-active { background: var(--rk-green-50); color: var(--rk-green-800); }
+
+.rk-ss__option.is-selected {
+  color: var(--rk-green-800);
+  font-weight: 700;
+}
+
+.rk-ss__option.is-selected svg { color: var(--rk-gold-600); flex: none; }
+
+.rk-ss__empty {
+  padding: 14px 12px;
+  color: var(--rk-muted);
+  font-size: .9rem;
+  text-align: center;
+}
+
+/* Scrolls, but the bar itself stays hidden — a visible track inside a small
+   dropdown reads as clutter. Wheel, drag, arrow keys and Home/End all still work. */
+.rk-ss__list {
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* legacy Edge */
+}
+
+.rk-ss__list::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+/* On a phone the panel is easier to hit as a fixed sheet than a tiny dropdown. */
+@media (max-width: 560px) {
+  .rk-ss__list { max-height: 46vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-ss__panel { animation: none; }
+  .rk-ss__caret { transition: none; }
+}

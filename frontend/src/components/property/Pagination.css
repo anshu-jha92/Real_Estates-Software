@@ -1,0 +1,98 @@
+/* Rama Kripa Estates — Pagination */
+
+.rk-pagi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: clamp(28px, 4vw, 48px);
+}
+
+.rk-pagi__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.rk-pagi__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-white);
+  color: var(--rk-body);
+  font-family: var(--rk-font-body);
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--rk-t), color var(--rk-t), border-color var(--rk-t), transform var(--rk-t);
+}
+
+.rk-pagi__btn svg { font-size: 1.2rem; }
+
+.rk-pagi__btn:hover:not(:disabled) {
+  border-color: var(--rk-gold-400);
+  color: var(--rk-green-800);
+  transform: translateY(-2px);
+}
+
+.rk-pagi__btn:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.rk-pagi__page.is-current {
+  background: var(--rk-green-800);
+  border-color: var(--rk-green-800);
+  color: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-pagi__page.is-current:hover { color: var(--rk-white); transform: none; }
+
+.rk-pagi__gap {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 44px;
+  color: var(--rk-muted);
+  font-weight: 700;
+}
+
+.rk-pagi__status {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--rk-muted);
+}
+
+/* Desktop keeps the numbers; the text status is redundant there */
+@media (min-width: 640px) {
+  .rk-pagi__status { display: none; }
+}
+
+@media (max-width: 639px) {
+  .rk-pagi__list { width: 100%; justify-content: space-between; }
+  .rk-pagi__num,
+  .rk-pagi__edge { display: none; }
+  .rk-pagi__btn { padding-inline: 18px; }
+}
+
+@media (max-width: 400px) {
+  .rk-pagi__btntext { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-pagi__btn { transition: none; }
+  .rk-pagi__btn:hover:not(:disabled) { transform: none; }
+}

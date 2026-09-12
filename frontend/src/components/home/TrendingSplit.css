@@ -1,0 +1,78 @@
+/* Home §10 — Trending split */
+
+.rk-trend__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+
+.rk-trend__title {
+  margin-top: 14px;
+  font-size: clamp(1.7rem, 1.2rem + 2.2vw, 2.7rem);
+  color: var(--rk-ink);
+}
+
+.rk-trend__title em {
+  font-style: italic;
+  color: var(--rk-gold-600);
+}
+
+.rk-trend__text {
+  margin-top: 16px;
+  max-width: 56ch;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--rk-body);
+}
+
+.rk-trend__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rk-line);
+}
+
+.rk-trend__listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .94rem;
+  line-height: 1.6;
+  color: var(--rk-body);
+}
+
+.rk-trend__tick {
+  flex: none;
+  margin-top: 3px;
+  font-size: 1.2rem;
+  color: var(--rk-gold-500);
+}
+
+.rk-trend__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.rk-trend__cards {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 22px);
+}
+
+@media (min-width: 1024px) {
+  .rk-trend__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+
+  .rk-trend__sticky {
+    position: sticky;
+    top: calc(var(--rk-header-h) + 28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-trend__sticky { position: static; }
+}

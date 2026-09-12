@@ -1,0 +1,102 @@
+/* Rama Kripa Estates — count-up stats band */
+
+.rk-statsband {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(44px, 6vw, 78px);
+  background:
+    radial-gradient(80% 130% at 15% 0%, rgba(27, 107, 79, .55), transparent 62%),
+    var(--rk-green-900);
+  color: var(--rk-white);
+}
+
+/* Faint gold pinhole pattern + hairlines top and bottom. */
+.rk-statsband::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(201, 162, 39, .16) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: .65;
+  pointer-events: none;
+}
+
+.rk-statsband::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 162, 39, 0), rgba(201, 162, 39, .55), rgba(201, 162, 39, 0));
+}
+
+.rk-statsband__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(22px, 3.5vw, 40px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rk-statsband__item {
+  position: relative;
+  min-width: 0;
+  text-align: center;
+}
+
+/* Gold hairline between items, never before the first in a row. */
+.rk-statsband__item::before {
+  content: '';
+  position: absolute;
+  top: 6%;
+  bottom: 6%;
+  left: calc(clamp(22px, 3.5vw, 40px) / -2);
+  width: 1px;
+  background: linear-gradient(rgba(201, 162, 39, 0), rgba(201, 162, 39, .5), rgba(201, 162, 39, 0));
+}
+
+.rk-statsband__item:nth-child(odd)::before { content: none; }
+
+.rk-statsband__value {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0;
+  font-family: var(--rk-font-display);
+  font-size: clamp(2.4rem, 7vw, 3.9rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--rk-gold-400);
+  font-variant-numeric: tabular-nums;
+}
+
+.rk-statsband__suffix {
+  font-size: .55em;
+  line-height: 1.2;
+  color: var(--rk-gold-300);
+}
+
+.rk-statsband__label {
+  margin: 12px 0 0;
+  font-size: clamp(.86rem, 2.6vw, 1rem);
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--rk-white);
+}
+
+.rk-statsband__note {
+  margin: 6px 0 0;
+  font-size: .8rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .66);
+}
+
+@media (min-width: 1024px) {
+  .rk-statsband__list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .rk-statsband__item:nth-child(odd)::before { content: ''; }
+  .rk-statsband__item:first-child::before { content: none; }
+}

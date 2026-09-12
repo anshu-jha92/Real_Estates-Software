@@ -1,0 +1,23 @@
+/* Rama Kripa Estates — design tokens (single source of truth, BUILD_SPEC §2) */
+:root {
+  --rk-green-900:#08251B; --rk-green-800:#0F3D2E; --rk-green-700:#14513C;
+  --rk-green-600:#1B6B4F; --rk-green-500:#27866A; --rk-green-50:#EFF6F2;
+  --rk-gold-600:#A98218; --rk-gold-500:#C9A227; --rk-gold-400:#DFBE5A; --rk-gold-300:#EBD79A; --rk-gold-50:#FBF6E6;
+  --rk-cream:#FAF7F1; --rk-white:#FFFFFF; --rk-ink:#131A17; --rk-body:#3E4A45;
+  --rk-muted:#6B7671; --rk-line:#E7E2D8; --rk-surface:#F4F1EA;
+  --rk-danger:#C0392B; --rk-success:#1E874B; --rk-info:#2A6FB0;
+  /* Logo colours — the RKE mark is red/black, independent of the green/gold UI palette. */
+  --rk-brand-red:#E8262C; --rk-brand-red-300:#FF8078; --rk-brand-black:#111111;
+
+  --rk-font-display:'Playfair Display',Georgia,serif;
+  --rk-font-body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+
+  --rk-r-sm:8px; --rk-r-md:14px; --rk-r-lg:20px; --rk-r-xl:28px; --rk-r-pill:999px;
+  --rk-sh-sm:0 2px 8px rgba(8,37,27,.06);
+  --rk-sh-md:0 10px 30px rgba(8,37,27,.10);
+  --rk-sh-lg:0 24px 60px rgba(8,37,27,.16);
+  --rk-sh-gold:0 10px 30px rgba(201,162,39,.28);
+  --rk-container:1280px; --rk-gutter:clamp(16px,4vw,40px);
+  --rk-header-h:76px; --rk-topbar-h:42px;
+  --rk-ease:cubic-bezier(.22,1,.36,1); --rk-t:.35s var(--rk-ease);
+}

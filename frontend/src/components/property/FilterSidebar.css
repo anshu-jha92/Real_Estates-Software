@@ -1,0 +1,287 @@
+/* Rama Kripa Estates — FilterSidebar (desktop panel + bottom-sheet body) */
+
+.rk-fsb {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--rk-white);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  box-shadow: var(--rk-sh-sm);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .rk-fsb--sticky {
+    position: sticky;
+    top: calc(var(--rk-header-h) + 16px);
+    max-height: calc(100svh - var(--rk-header-h) - 32px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ---------- Head ---------- */
+
+.rk-fsb__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--rk-green-800);
+  color: var(--rk-white);
+}
+
+.rk-fsb__heading {
+  font-family: var(--rk-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--rk-white);
+  margin: 0;
+}
+
+.rk-fsb__reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: var(--rk-r-pill);
+  background: rgba(255, 255, 255, .1);
+  color: var(--rk-gold-300);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--rk-t), color var(--rk-t);
+}
+
+.rk-fsb__reset:hover { background: var(--rk-gold-500); color: var(--rk-green-900); }
+
+/* ---------- Groups ---------- */
+
+.rk-fsb__group { border-bottom: 1px solid var(--rk-line); }
+
+/* While a dropdown inside a group is open, lift that whole group above its
+   siblings. The open list must never be painted over by the next group,
+   whatever stacking context the slide-in animation is in at that moment. */
+.rk-fsb__group:has(.rk-ss.is-open) {
+  position: relative;
+  z-index: 2;
+}
+
+.rk-fsb__grouphead { margin: 0; font-size: inherit; font-family: inherit; }
+
+.rk-fsb__grouptoggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 18px;
+  text-align: left;
+  font-family: var(--rk-font-body);
+  font-size: .84rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--rk-green-800);
+  cursor: pointer;
+  transition: background var(--rk-t), color var(--rk-t);
+}
+
+.rk-fsb__grouptoggle:hover { background: var(--rk-cream); }
+
+.rk-fsb__grouptitle { flex: none; }
+
+.rk-fsb__grouphint {
+  flex: 1;
+  min-width: 0;
+  font-size: .74rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--rk-muted);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-fsb__groupicon {
+  flex: none;
+  margin-left: auto;
+  font-size: 1.3rem;
+  color: var(--rk-gold-600);
+  transition: transform var(--rk-t);
+}
+
+.rk-fsb__grouphint + .rk-fsb__groupicon { margin-left: 0; }
+.rk-fsb__group.is-open .rk-fsb__groupicon { transform: rotate(180deg); }
+
+.rk-fsb__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 18px 18px;
+  animation: rkSlideDown .25s var(--rk-ease) both;
+}
+
+/* ---------- Search ---------- */
+
+.rk-fsb__search { position: relative; }
+
+.rk-fsb__searchicon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.15rem;
+  color: var(--rk-muted);
+  pointer-events: none;
+}
+
+.rk-fsb__searchinput { padding-left: 42px; border-radius: var(--rk-r-pill); }
+
+.rk-fsb__searchinput::-webkit-search-cancel-button { cursor: pointer; }
+
+.rk-fsb__note { font-size: .76rem; color: var(--rk-muted); line-height: 1.5; }
+
+/* ---------- Pills (category / bedrooms) ---------- */
+
+.rk-fsb__pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.rk-fsb__pills--tight { gap: 7px; }
+
+.rk-fsb__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-white);
+  color: var(--rk-body);
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background var(--rk-t), color var(--rk-t), border-color var(--rk-t);
+}
+
+.rk-fsb__pill:hover { border-color: var(--rk-gold-400); color: var(--rk-green-800); }
+
+.rk-fsb__pill.is-active {
+  background: var(--rk-green-800);
+  border-color: var(--rk-green-800);
+  color: var(--rk-white);
+}
+
+.rk-fsb__pill em {
+  font-style: normal;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-surface);
+  color: var(--rk-muted);
+}
+
+.rk-fsb__pill.is-active em { background: rgba(255, 255, 255, .16); color: var(--rk-gold-300); }
+
+/* keyboard focus reaches the visually-hidden radio, so mirror it on the pill */
+.rk-fsb__pill:focus-within {
+  outline: 3px solid var(--rk-gold-500);
+  outline-offset: 3px;
+}
+
+/* ---------- Segmented toggle (Buy / Rent) ---------- */
+
+.rk-fsb__seg {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-surface);
+}
+
+.rk-fsb__segitem {
+  display: grid;
+  place-items: center;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: var(--rk-r-pill);
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--rk-body);
+  cursor: pointer;
+  transition: background var(--rk-t), color var(--rk-t), box-shadow var(--rk-t);
+}
+
+.rk-fsb__segitem:hover { color: var(--rk-green-800); }
+
+.rk-fsb__segitem.is-active {
+  background: var(--rk-white);
+  color: var(--rk-green-800);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-fsb__segitem:focus-within { outline: 3px solid var(--rk-gold-500); outline-offset: 2px; }
+
+/* ---------- Checkbox list ---------- */
+
+.rk-fsb__checks { display: flex; flex-direction: column; gap: 2px; list-style: none; }
+
+.rk-fsb__check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 6px 4px;
+  font-size: .88rem;
+  color: var(--rk-body);
+  cursor: pointer;
+  border-radius: var(--rk-r-sm);
+  transition: color var(--rk-t), background var(--rk-t);
+}
+
+.rk-fsb__check:hover { color: var(--rk-green-800); background: var(--rk-cream); }
+
+.rk-fsb__check input[type='checkbox'] {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  accent-color: var(--rk-green-700);
+  cursor: pointer;
+}
+
+.rk-fsb__check span { flex: 1; min-width: 0; }
+
+.rk-fsb__check em {
+  font-style: normal;
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--rk-muted);
+}
+
+/* ---------- Budget / area ---------- */
+
+.rk-fsb__two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+
+.rk-fsb__range { font-size: .8rem; color: var(--rk-muted); }
+.rk-fsb__range strong { color: var(--rk-green-800); }
+
+.rk-fsb__unit { max-width: 60%; }
+
+/* ---------- Clear ---------- */
+
+.rk-fsb__clear { margin: 16px 18px 18px; width: calc(100% - 36px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-fsb__panel { animation: none; }
+  .rk-fsb__group.is-open .rk-fsb__groupicon { transform: none; }
+}

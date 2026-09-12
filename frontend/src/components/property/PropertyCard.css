@@ -1,0 +1,356 @@
+/* Rama Kripa Estates — PropertyCard (grid / wide / compact) */
+
+.rk-pcard {
+  position: relative;
+  display: flex;
+  background: var(--rk-white);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  box-shadow: var(--rk-sh-sm);
+  overflow: hidden;
+  transition: transform var(--rk-t), box-shadow var(--rk-t), border-color var(--rk-t);
+}
+
+.rk-pcard:hover,
+.rk-pcard:focus-within {
+  transform: translateY(-6px);
+  box-shadow: var(--rk-sh-lg);
+  border-color: rgba(201, 162, 39, .5);
+}
+
+.rk-pcard__link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.rk-pcard__link:hover { color: inherit; }
+
+/* ---------- Media ---------- */
+
+.rk-pcard__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--rk-surface);
+  flex: none;
+}
+
+.rk-pcard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.001);
+  transition: transform 1.4s var(--rk-ease);
+}
+
+.rk-pcard:hover .rk-pcard__img,
+.rk-pcard:focus-within .rk-pcard__img { transform: scale(1.09); }
+
+.rk-pcard__scrim {
+  position: absolute;
+  inset: 40% 0 0 0;
+  background: linear-gradient(180deg, rgba(8, 37, 27, 0) 0%, rgba(8, 37, 27, .18) 45%, rgba(8, 37, 27, .68) 100%);
+  pointer-events: none;
+}
+
+/* Status badge (top-left) */
+.rk-pcard__status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 6px 13px;
+  border-radius: var(--rk-r-pill);
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  color: var(--rk-white);
+  background: var(--rk-green-800);
+  box-shadow: 0 4px 14px rgba(8, 37, 27, .28);
+  white-space: nowrap;
+}
+
+.rk-pcard__status--gold { background: linear-gradient(135deg, var(--rk-gold-400), var(--rk-gold-600)); color: var(--rk-green-900); }
+.rk-pcard__status--info { background: var(--rk-info); }
+.rk-pcard__status--success { background: var(--rk-success); }
+.rk-pcard__status--danger { background: var(--rk-danger); }
+.rk-pcard__status--dark { background: var(--rk-green-800); }
+
+/* FEATURED ribbon (top-right) */
+.rk-pcard__ribbon {
+  position: absolute;
+  top: 16px;
+  right: -34px;
+  z-index: 2;
+  display: block;
+  width: 132px;
+  padding: 6px 0;
+  transform: rotate(38deg);
+  transform-origin: center;
+  text-align: center;
+  background: linear-gradient(135deg, var(--rk-gold-300), var(--rk-gold-500) 55%, var(--rk-gold-600));
+  color: var(--rk-green-900);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(8, 37, 27, .26);
+}
+
+/* Category chip (bottom-left, over the scrim) */
+.rk-pcard__cat {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  padding: 6px 14px;
+  border-radius: var(--rk-r-pill);
+  background: rgba(250, 247, 241, .92);
+  color: var(--rk-green-800);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 39, .4);
+}
+
+/* Save / shortlist toggle — sibling of the link, never navigates */
+.rk-pcard__save {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .5);
+  background: rgba(250, 247, 241, .88);
+  color: var(--rk-green-800);
+  font-size: 1.15rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background var(--rk-t), color var(--rk-t), transform var(--rk-t);
+}
+
+.rk-pcard__save:hover { background: var(--rk-white); color: var(--rk-danger); transform: scale(1.08); }
+.rk-pcard__save[aria-pressed='true'] { color: var(--rk-danger); background: var(--rk-white); }
+
+/* The ribbon owns the top-right corner, so the heart drops below it */
+.rk-pcard--featured .rk-pcard__save { top: 64px; }
+
+/* ---------- Body ---------- */
+
+.rk-pcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  padding: 18px clamp(16px, 2.2vw, 22px) 14px;
+}
+
+/* Plain text on purpose: a price is information, not decoration. No display
+   serif and no gradient fill — those made the number harder to scan. */
+.rk-pcard__price {
+  font-family: var(--rk-font-body);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--rk-ink);
+}
+
+.rk-pcard__price small {
+  font-family: var(--rk-font-body);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: none;
+  color: var(--rk-muted);
+}
+
+.rk-pcard__title {
+  font-family: var(--rk-font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--rk-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color var(--rk-t);
+}
+
+.rk-pcard:hover .rk-pcard__title { color: var(--rk-green-700); }
+
+.rk-pcard__place {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: .84rem;
+  color: var(--rk-muted);
+  line-height: 1.45;
+}
+
+.rk-pcard__place span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rk-pcard__pin { flex: none; color: var(--rk-gold-500); font-size: 1rem; margin-top: 1px; }
+
+.rk-pcard__specs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: auto;
+  padding-top: 10px;
+  list-style: none;
+}
+
+.rk-pcard__spec {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--rk-body);
+  white-space: nowrap;
+}
+
+/* thin gold dot separators */
+.rk-pcard__spec + .rk-pcard__spec::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: var(--rk-gold-500);
+  flex: none;
+}
+
+/* ---------- Footer ---------- */
+
+.rk-pcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px clamp(16px, 2.2vw, 22px);
+  border-top: 1px solid var(--rk-line);
+  background: var(--rk-cream);
+}
+
+.rk-pcard__dev {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--rk-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-pcard__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--rk-green-800);
+  transition: color var(--rk-t), gap var(--rk-t);
+}
+
+.rk-pcard__more svg { transition: transform var(--rk-t); }
+
+.rk-pcard:hover .rk-pcard__more { color: var(--rk-gold-600); }
+.rk-pcard:hover .rk-pcard__more svg { transform: translateX(4px); }
+
+/* ---------- variant: wide ---------- */
+
+@media (min-width: 768px) {
+  .rk-pcard--wide .rk-pcard__link {
+    display: grid;
+    grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+  }
+
+  .rk-pcard--wide .rk-pcard__media {
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 216px;
+  }
+
+  .rk-pcard--wide .rk-pcard__body { padding-bottom: 8px; }
+  .rk-pcard--wide .rk-pcard__title { -webkit-line-clamp: 2; line-clamp: 2; }
+  .rk-pcard--wide .rk-pcard__foot { background: var(--rk-white); }
+}
+
+/* ---------- variant: compact ---------- */
+
+.rk-pcard--compact { border-radius: var(--rk-r-md); }
+.rk-pcard--compact:hover { transform: translateY(-2px); box-shadow: var(--rk-sh-md); }
+
+.rk-pcard--compact .rk-pcard__link {
+  flex-direction: row;
+  align-items: stretch;
+  gap: 12px;
+  padding: 10px;
+}
+
+.rk-pcard--compact .rk-pcard__media {
+  width: 88px;
+  height: 88px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--rk-r-sm);
+  flex: none;
+}
+
+.rk-pcard--compact .rk-pcard__scrim { display: none; }
+
+.rk-pcard--compact .rk-pcard__status {
+  top: 6px;
+  left: 6px;
+  padding: 3px 7px;
+  font-size: .52rem;
+  letter-spacing: .06em;
+}
+
+.rk-pcard--compact .rk-pcard__body { padding: 2px 0; gap: 4px; justify-content: center; }
+.rk-pcard--compact .rk-pcard__price { font-size: 1rem; }
+.rk-pcard--compact .rk-pcard__title { font-size: .92rem; -webkit-line-clamp: 2; line-clamp: 2; }
+.rk-pcard--compact .rk-pcard__place { font-size: .76rem; }
+.rk-pcard--compact .rk-pcard__specs { display: none; }
+.rk-pcard--compact .rk-pcard__save { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-pcard,
+  .rk-pcard__img,
+  .rk-pcard__save,
+  .rk-pcard__more svg { transition: none; }
+
+  .rk-pcard:hover,
+  .rk-pcard:focus-within { transform: none; }
+
+  .rk-pcard:hover .rk-pcard__img,
+  .rk-pcard:focus-within .rk-pcard__img { transform: none; }
+
+  .rk-pcard:hover .rk-pcard__more svg { transform: none; }
+  .rk-pcard__save:hover { transform: none; }
+}

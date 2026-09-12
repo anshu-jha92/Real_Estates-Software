@@ -1,0 +1,49 @@
+.rk-crumbs { min-width: 0; }
+
+.rk-crumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 4px;
+  font-size: .84rem;
+  font-weight: 600;
+}
+
+.rk-crumbs__item { display: inline-flex; align-items: center; gap: 4px; }
+
+.rk-crumbs__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 2px;
+  color: var(--rk-muted);
+  transition: color var(--rk-t);
+}
+
+.rk-crumbs__link:hover,
+.rk-crumbs__link:focus-visible { color: var(--rk-gold-600); }
+
+.rk-crumbs__home { font-size: 1rem; }
+
+.rk-crumbs__sep { font-size: 1.05rem; color: var(--rk-line); flex: none; }
+
+.rk-crumbs__current {
+  padding: 3px 2px;
+  color: var(--rk-green-800);
+  font-weight: 700;
+}
+
+/* On dark bands (PageHero, dark sections) */
+.rk-crumbs--light .rk-crumbs__link { color: rgba(255, 255, 255, .75); }
+.rk-crumbs--light .rk-crumbs__link:hover,
+.rk-crumbs--light .rk-crumbs__link:focus-visible { color: var(--rk-gold-300); }
+.rk-crumbs--light .rk-crumbs__sep { color: rgba(255, 255, 255, .45); }
+.rk-crumbs--light .rk-crumbs__current { color: var(--rk-gold-300); }
+
+@media (max-width: 479px) {
+  .rk-crumbs__list { font-size: .78rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-crumbs__link { transition: none; }
+}

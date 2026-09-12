@@ -1,0 +1,201 @@
+/* Privacy Policy / Terms — sectioned document with a sticky TOC. Mobile-first. */
+
+.rk-legal {
+  background: var(--rk-cream);
+}
+
+.rk-legal__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 3.4vw, 48px);
+  align-items: start;
+}
+
+/* ---------- Table of contents ---------- */
+
+.rk-legal__toc {
+  padding: clamp(18px, 2.6vw, 26px);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-legal__tocTitle {
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--rk-gold-600);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--rk-line);
+}
+
+.rk-legal__tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rk-legal__tocLink {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-height: 44px;
+  padding: 9px 10px;
+  border-radius: var(--rk-r-sm);
+  font-size: .88rem;
+  line-height: 1.45;
+  color: var(--rk-body);
+  transition: background-color var(--rk-t), color var(--rk-t);
+}
+
+.rk-legal__tocLink:hover,
+.rk-legal__tocLink:focus-visible {
+  background: var(--rk-green-50);
+  color: var(--rk-green-800);
+}
+
+.rk-legal__tocNum {
+  flex: none;
+  font-family: var(--rk-font-display);
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--rk-gold-500);
+}
+
+.rk-legal__tocSwitch {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rk-line);
+}
+
+.rk-legal__tocSwitch .rk-link-gold {
+  min-height: 44px;
+  align-items: center;
+}
+
+/* ---------- Document ---------- */
+
+.rk-legal__doc {
+  max-width: 76ch;
+}
+
+.rk-legal__updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-gold-50);
+  color: var(--rk-gold-600);
+  font-size: .84rem;
+  font-weight: 600;
+}
+
+.rk-legal__updated strong {
+  color: var(--rk-gold-600);
+}
+
+.rk-legal__intro {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--rk-green-600);
+  border-radius: var(--rk-r-sm);
+  background: var(--rk-white);
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--rk-body);
+}
+
+.rk-legal__section,
+.rk-legal__contact {
+  margin-top: clamp(30px, 4vw, 46px);
+  scroll-margin-top: calc(var(--rk-header-h) + 24px);
+}
+
+.rk-legal__sectionTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rk-line);
+  font-size: clamp(1.22rem, 1.08rem + .6vw, 1.55rem);
+  color: var(--rk-green-800);
+}
+
+.rk-legal__sectionNum {
+  flex: none;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--rk-gold-500);
+}
+
+.rk-legal__body {
+  font-size: 1rem;
+  line-height: 1.82;
+  color: var(--rk-body);
+}
+
+.rk-legal__body p + p,
+.rk-legal__body ul + p,
+.rk-legal__body p + ul {
+  margin-top: 14px;
+}
+
+.rk-legal__body ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 1.3em;
+  list-style: disc;
+}
+
+.rk-legal__body li::marker {
+  color: var(--rk-gold-500);
+}
+
+/* ---------- Contact block ---------- */
+
+.rk-legal__contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rk-legal__contactList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  font-size: .96rem;
+  color: var(--rk-body);
+}
+
+.rk-legal__contactList svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--rk-gold-600);
+  font-size: 1.1rem;
+}
+
+.rk-legal__contactList a {
+  word-break: break-word;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 1024px) {
+  .rk-legal__row {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .rk-legal__toc {
+    position: sticky;
+    top: calc(var(--rk-header-h) + 20px);
+    max-height: calc(100svh - var(--rk-header-h) - 48px);
+    overflow-y: auto;
+  }
+}

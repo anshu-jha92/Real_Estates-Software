@@ -1,0 +1,6 @@
+/* The .rk-reveal keyframe/transition rules live in styles/animations.css.
+   This file only guards the wrapper so it never breaks a grid or flex parent. */
+
+.rk-reveal { min-width: 0; }
+
+.rk-reveal > * { min-width: 0; }

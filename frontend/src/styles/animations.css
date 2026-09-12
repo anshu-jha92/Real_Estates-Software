@@ -1,0 +1,118 @@
+/* Rama Kripa Estates — keyframes + scroll reveal */
+
+/* rkFadeUp and rkSlideDown end on `transform: none`, not translate3d(0,0,0):
+   they run with fill-mode `both`, and a retained zero-transform is still a
+   transform, which turns every animated container into a stacking context.
+   That trapped any dropdown's z-index inside its own accordion body, so the
+   next group painted straight over the open list. `none` looks identical. */
+@keyframes rkFadeUp {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes rkFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes rkKenBurns {
+  0%   { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.16) translate3d(-1.4%, -1.8%, 0); }
+}
+
+@keyframes rkMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes rkShimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+@keyframes rkPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, .55); }
+  70%      { box-shadow: 0 0 0 16px rgba(201, 162, 39, 0); }
+}
+
+@keyframes rkFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+
+@keyframes rkSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes rkSlideDown {
+  from { opacity: 0; transform: translate3d(0, -12px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Scroll reveal ---------- */
+
+.rk-reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity .7s var(--rk-ease) var(--rk-delay, 0ms),
+    transform .7s var(--rk-ease) var(--rk-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.rk-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.rk-reveal--left { transform: translate3d(-28px, 0, 0); }
+.rk-reveal--right { transform: translate3d(28px, 0, 0); }
+.rk-reveal--zoom { transform: scale(.94); }
+.rk-reveal--left.is-visible,
+.rk-reveal--right.is-visible { transform: translate3d(0, 0, 0); }
+.rk-reveal--zoom.is-visible { transform: scale(1); }
+
+/* Utility animation hooks */
+.rk-anim-fade-up { animation: rkFadeUp .8s var(--rk-ease) both; animation-delay: var(--rk-delay, 0ms); }
+.rk-anim-fade-in { animation: rkFadeIn .8s var(--rk-ease) both; animation-delay: var(--rk-delay, 0ms); }
+.rk-anim-slide-down { animation: rkSlideDown .3s var(--rk-ease) both; }
+.rk-anim-float { animation: rkFloat 4.5s ease-in-out infinite; }
+.rk-anim-pulse { animation: rkPulse 2.4s ease-out infinite; }
+.rk-anim-spin { animation: rkSpin 1s linear infinite; }
+
+/* ---------- Reduced motion: kill everything ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html { scroll-behavior: auto; }
+
+  .rk-reveal,
+  .rk-reveal--left,
+  .rk-reveal--right,
+  .rk-reveal--zoom {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .rk-skeleton::after,
+  .rk-anim-float,
+  .rk-anim-pulse,
+  .rk-anim-spin { animation: none !important; }
+
+  .rk-anim-spin { border-top-color: var(--rk-gold-500); }
+
+  .rk-btn:hover { transform: none; }
+  .rk-btn::after { display: none; }
+  .rk-card--hover:hover { transform: none; }
+  .rk-card--hover:hover .rk-card__media img { transform: none; }
+}

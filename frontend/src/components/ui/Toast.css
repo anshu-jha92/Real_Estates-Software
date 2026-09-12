@@ -1,0 +1,97 @@
+.rk-toasts {
+  position: fixed;
+  top: calc(var(--rk-header-h) + 16px);
+  right: 16px;
+  z-index: 1400;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(380px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.rk-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 14px 14px 16px;
+  background: var(--rk-white);
+  border: 1px solid var(--rk-line);
+  border-left: 4px solid var(--rk-green-600);
+  border-radius: var(--rk-r-md);
+  box-shadow: var(--rk-sh-md);
+  pointer-events: auto;
+  animation: rkSlideDown .3s var(--rk-ease) both;
+}
+
+.rk-toast__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  font-size: 1.35rem;
+  color: var(--rk-green-600);
+}
+
+.rk-toast__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.rk-toast__title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--rk-ink);
+  line-height: 1.35;
+}
+
+.rk-toast__message {
+  font-size: .86rem;
+  color: var(--rk-body);
+  line-height: 1.5;
+}
+
+.rk-toast__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin: -4px -4px 0 0;
+  border-radius: 50%;
+  color: var(--rk-muted);
+  font-size: 1.05rem;
+  transition: background var(--rk-t), color var(--rk-t);
+}
+
+.rk-toast__close:hover { background: var(--rk-surface); color: var(--rk-ink); }
+
+.rk-toast--success { border-left-color: var(--rk-success); }
+.rk-toast--success .rk-toast__icon { color: var(--rk-success); }
+
+.rk-toast--error { border-left-color: var(--rk-danger); }
+.rk-toast--error .rk-toast__icon { color: var(--rk-danger); }
+
+.rk-toast--warning { border-left-color: var(--rk-gold-500); }
+.rk-toast--warning .rk-toast__icon { color: var(--rk-gold-600); }
+
+.rk-toast--info { border-left-color: var(--rk-info); }
+.rk-toast--info .rk-toast__icon { color: var(--rk-info); }
+
+@media (max-width: 600px) {
+  .rk-toasts {
+    top: auto;
+    bottom: 96px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-toast { animation: none; }
+}

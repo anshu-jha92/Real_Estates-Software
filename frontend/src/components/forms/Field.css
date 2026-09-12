@@ -1,0 +1,67 @@
+/* Field — thin layer over the global .rk-field / .rk-input / .rk-error rules. */
+
+.rk-field__control {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.rk-field__icon {
+  position: absolute;
+  top: 14px;
+  left: 15px;
+  display: inline-flex;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--rk-green-600);
+  pointer-events: none;
+  transition: color var(--rk-t);
+}
+
+.rk-field__control--icon .rk-input,
+.rk-field__control--icon .rk-select,
+.rk-field__control--icon .rk-textarea,
+.rk-field__control--icon .rk-ss__trigger {
+  padding-left: 46px;
+}
+
+.rk-field__control:focus-within .rk-field__icon {
+  color: var(--rk-gold-600);
+}
+
+.rk-field--invalid .rk-field__icon {
+  color: var(--rk-danger);
+}
+
+.rk-field__hint,
+.rk-field__error {
+  margin: 0;
+}
+
+.rk-field__error svg {
+  flex: none;
+  font-size: 1rem;
+}
+
+/* Dark green panels (global .rk-form--dark) */
+.rk-form--dark .rk-field__icon {
+  color: var(--rk-gold-300);
+}
+
+.rk-form--dark .rk-field__control:focus-within .rk-field__icon {
+  color: var(--rk-gold-400);
+}
+
+.rk-form--dark .rk-field__hint {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.rk-form--dark .rk-field__error {
+  color: var(--rk-gold-300);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-field__icon {
+    transition: none;
+  }
+}

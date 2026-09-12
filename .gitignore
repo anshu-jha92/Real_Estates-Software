@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output (Render builds it; never commit it)
+frontend/dist/
+backend/dist/
+
+# Secrets — every env file except the committed examples
+.env
+.env.*
+*.env
+*.bak
+!.env.example
+!**/.env.example
+
+# Logs / caches / editors / OS
+*.log
+logs/
+.vite/
+.cache/
+coverage/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Editor / AI-tool config
+.claude/

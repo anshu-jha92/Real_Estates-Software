@@ -1,0 +1,165 @@
+/* Rama Kripa Estates — ConfigTable (table above 640px, stacked cards below) */
+
+.rk-config {
+  width: 100%;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-white);
+  overflow: hidden;
+}
+
+.rk-config__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+}
+
+.rk-config__table th {
+  padding: 14px 18px;
+  text-align: left;
+  background: var(--rk-green-800);
+  color: var(--rk-gold-300);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rk-config__table td {
+  padding: 15px 18px;
+  border-top: 1px solid var(--rk-line);
+  color: var(--rk-body);
+  vertical-align: middle;
+}
+
+.rk-config__table tbody tr { transition: background var(--rk-t); }
+.rk-config__table tbody tr:hover { background: var(--rk-cream); }
+
+.rk-config__label {
+  font-family: var(--rk-font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--rk-ink);
+  line-height: 1.35;
+}
+
+/* Area is short and must never wrap; the label column is the one that gives. */
+.rk-config__table td[data-label="Area"] { white-space: nowrap; }
+
+.rk-config__price {
+  font-weight: 700;
+  color: var(--rk-green-800);
+  white-space: nowrap;
+}
+
+/* width:1% + nowrap = shrink-to-fit, so the button can never be pushed out of view. */
+.rk-config__actions {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.rk-config__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 9px 18px;
+  border: 1px solid var(--rk-gold-500);
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-gold-50);
+  color: var(--rk-gold-600);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--rk-t), color var(--rk-t), transform var(--rk-t);
+}
+
+.rk-config__btn:hover {
+  background: var(--rk-gold-500);
+  color: var(--rk-green-900);
+  transform: translateY(-2px);
+}
+
+.rk-config__btn svg { transition: transform var(--rk-t); }
+.rk-config__btn:hover svg { transform: translateX(3px); }
+
+.rk-config__none {
+  font-size: .92rem;
+  line-height: 1.7;
+  color: var(--rk-body);
+  padding: 16px 18px;
+  border: 1px dashed var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-cream);
+}
+
+/* ---------- Stacked cards ---------- */
+
+@media (max-width: 639px) {
+  .rk-config { border: 0; background: transparent; }
+
+  .rk-config__table,
+  .rk-config__table tbody,
+  .rk-config__table tr,
+  .rk-config__table td { display: block; width: 100%; }
+
+  .rk-config__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+
+  .rk-config__table tr {
+    margin-bottom: 12px;
+    border: 1px solid var(--rk-line);
+    border-radius: var(--rk-r-md);
+    background: var(--rk-white);
+    box-shadow: var(--rk-sh-sm);
+    overflow: hidden;
+  }
+
+  .rk-config__table tr:last-child { margin-bottom: 0; }
+
+  .rk-config__table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 11px 16px;
+    border-top: 0;
+    border-bottom: 1px solid var(--rk-line);
+    text-align: right;
+  }
+
+  .rk-config__table td::before {
+    content: attr(data-label);
+    flex: none;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--rk-muted);
+    text-align: left;
+  }
+
+  .rk-config__label {
+    background: var(--rk-cream);
+    font-size: 1.05rem;
+  }
+
+  .rk-config__actions {
+    justify-content: stretch;
+    border-bottom: 0;
+  }
+
+  .rk-config__actions::before { display: none; }
+  .rk-config__btn { width: 100%; justify-content: center; min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-config__table tbody tr,
+  .rk-config__btn,
+  .rk-config__btn svg { transition: none; }
+  .rk-config__btn:hover { transform: none; }
+  .rk-config__btn:hover svg { transform: none; }
+}

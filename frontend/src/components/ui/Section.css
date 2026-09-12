@@ -1,0 +1,15 @@
+/* .rk-section base lives in styles/base.css; these are the size modifiers. */
+
+.rk-section--sm { padding-block: clamp(32px, 4vw, 56px); }
+.rk-section--md { padding-block: clamp(52px, 7vw, 104px); }
+.rk-section--lg { padding-block: clamp(70px, 9vw, 140px); }
+
+.rk-section--dark {
+  background:
+    radial-gradient(90% 120% at 12% 0%, rgba(27, 107, 79, .55), transparent 60%),
+    var(--rk-green-800);
+  color: rgba(255, 255, 255, .82);
+}
+
+.rk-section--dark a { color: var(--rk-gold-300); }
+.rk-section--dark a:hover { color: var(--rk-gold-400); }

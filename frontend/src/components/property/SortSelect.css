@@ -1,0 +1,40 @@
+/* Rama Kripa Estates — SortSelect */
+
+.rk-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.rk-sort__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--rk-muted);
+  cursor: pointer;
+}
+
+.rk-sort__label svg { font-size: 1.05rem; color: var(--rk-gold-600); }
+
+.rk-sort__select {
+  min-height: 44px;
+  min-width: 172px;
+  padding-block: 9px;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--rk-ink);
+  background-color: var(--rk-white);
+  border-radius: var(--rk-r-pill);
+}
+
+@media (max-width: 480px) {
+  .rk-sort { flex: 1 1 auto; }
+  .rk-sort__label span { display: none; }
+  .rk-sort__select { min-width: 0; width: 100%; }
+}

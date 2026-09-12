@@ -1,0 +1,98 @@
+.rk-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 4vw, 40px);
+  overflow-y: auto;
+}
+
+.rk-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 37, 27, .62);
+  backdrop-filter: blur(4px);
+  animation: rkFadeIn .25s var(--rk-ease) both;
+}
+
+.rk-modal__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 620px;
+  max-height: calc(100svh - 48px);
+  background: var(--rk-white);
+  border-radius: var(--rk-r-lg);
+  box-shadow: var(--rk-sh-lg);
+  overflow: hidden;
+  animation: rkFadeUp .35s var(--rk-ease) both;
+}
+
+.rk-modal__panel--sm { max-width: 440px; }
+.rk-modal__panel--md { max-width: 620px; }
+.rk-modal__panel--lg { max-width: 920px; }
+.rk-modal__panel--full { max-width: 1180px; }
+
+.rk-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px clamp(18px, 3vw, 28px) 14px;
+  border-bottom: 1px solid var(--rk-line);
+}
+
+.rk-modal__title {
+  font-family: var(--rk-font-display);
+  font-size: 1.3rem;
+  color: var(--rk-ink);
+  margin: 0;
+}
+
+.rk-modal__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -8px -8px -8px auto;
+  border-radius: 50%;
+  color: var(--rk-body);
+  font-size: 1.35rem;
+  transition: background var(--rk-t), color var(--rk-t);
+}
+
+.rk-modal__close:hover { background: var(--rk-surface); color: var(--rk-danger); }
+
+.rk-modal__body {
+  padding: clamp(18px, 3vw, 28px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.rk-modal__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px clamp(18px, 3vw, 28px);
+  border-top: 1px solid var(--rk-line);
+  background: var(--rk-cream);
+}
+
+@media (max-width: 480px) {
+  .rk-modal { padding: 0; align-items: flex-end; }
+  .rk-modal__panel {
+    max-height: 92svh;
+    border-radius: var(--rk-r-lg) var(--rk-r-lg) 0 0;
+  }
+  .rk-modal__foot .rk-btn { flex: 1 1 140px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-modal__panel,
+  .rk-modal__backdrop { animation: none; }
+}

@@ -1,0 +1,86 @@
+/* Home §11 — Developer marquee */
+
+.rk-devs__marquee {
+  margin-top: clamp(26px, 3.5vw, 42px);
+  /* fading edge masks, tuned for the cream band */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.rk-devs__pill {
+  display: inline-grid;
+  place-items: center;
+  min-width: 168px;
+  min-height: 78px;
+  padding: 16px 30px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+  filter: grayscale(1);
+  opacity: .6;
+  transition: filter var(--rk-t), opacity var(--rk-t), border-color var(--rk-t),
+    box-shadow var(--rk-t), transform var(--rk-t);
+}
+
+.rk-devs__pill:hover {
+  filter: grayscale(0);
+  opacity: 1;
+  border-color: rgba(201, 162, 39, .5);
+  box-shadow: var(--rk-sh-md);
+  transform: translateY(-3px);
+}
+
+.rk-devs__logo {
+  width: auto;
+  max-width: 132px;
+  max-height: 46px;
+  object-fit: contain;
+}
+
+.rk-devs__name {
+  font-family: var(--rk-font-display);
+  font-size: 1.22rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--rk-green-800);
+}
+
+.rk-devs__foot {
+  margin-top: clamp(20px, 2.6vw, 30px);
+  text-align: center;
+}
+
+@media (max-width: 479px) {
+  .rk-devs__pill { min-width: 146px; min-height: 68px; padding: 14px 22px; }
+  .rk-devs__name { font-size: 1.08rem; }
+}
+
+/* Reduced motion: the shared Marquee stops the animation — turn the track
+   into a plain wrapped grid instead of a horizontal scroller. */
+@media (prefers-reduced-motion: reduce) {
+  .rk-devs__marquee {
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .rk-devs__marquee .rk-marquee__track {
+    width: 100%;
+    animation: none;
+  }
+
+  .rk-devs__marquee .rk-marquee__group {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 16px;
+    padding-right: 0;
+  }
+
+  .rk-devs__pill { opacity: 1; filter: grayscale(0); }
+  .rk-devs__pill:hover { transform: none; }
+}

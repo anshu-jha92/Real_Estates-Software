@@ -1,0 +1,397 @@
+/* About / Who We Are. Mobile-first. */
+
+.rk-about {
+  background: var(--rk-cream);
+}
+
+.rk-about [id] {
+  scroll-margin-top: calc(var(--rk-header-h) + 16px);
+}
+
+/* ---------- Story ---------- */
+
+.rk-about__storyRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+.rk-about__collageGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.rk-about__collageItem {
+  overflow: hidden;
+  border-radius: var(--rk-r-lg);
+  box-shadow: var(--rk-sh-md);
+  background: var(--rk-surface);
+}
+
+.rk-about__collageItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--rk-ease);
+}
+
+.rk-about__collageItem:hover img {
+  transform: scale(1.05);
+}
+
+.rk-about__collageMain {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10;
+}
+
+.rk-about__collageSmall,
+.rk-about__collageWide {
+  aspect-ratio: 4 / 3;
+}
+
+.rk-about__badge {
+  position: absolute;
+  right: -6px;
+  bottom: -14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: var(--rk-r-lg);
+  background: var(--rk-green-800);
+  color: var(--rk-white);
+  box-shadow: var(--rk-sh-lg);
+  border: 1px solid rgba(201, 162, 39, .4);
+}
+
+.rk-about__badgeNum {
+  font-family: var(--rk-font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--rk-gold-400);
+}
+
+.rk-about__badgeText {
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, .8);
+}
+
+.rk-about__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rk-about__copy p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--rk-body);
+  max-width: 62ch;
+}
+
+.rk-about__proof {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 18px 20px;
+  border-radius: var(--rk-r-md);
+  background: var(--rk-white);
+  border: 1px solid var(--rk-line);
+  border-left: 4px solid var(--rk-gold-500);
+}
+
+.rk-about__proof li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .92rem;
+  color: var(--rk-body);
+}
+
+.rk-about__proof svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--rk-gold-600);
+  font-size: 1.05rem;
+}
+
+.rk-about__storyCta {
+  align-self: flex-start;
+  margin-top: 6px;
+}
+
+/* ---------- Mission / vision / values ---------- */
+
+.rk-about__pillarGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(18px, 2.4vw, 28px);
+  margin-top: clamp(28px, 4vw, 48px);
+}
+
+.rk-about__pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  background: var(--rk-cream);
+  box-shadow: var(--rk-sh-sm);
+  transition: transform var(--rk-t), box-shadow var(--rk-t), border-color var(--rk-t);
+}
+
+.rk-about__pillar:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--rk-sh-md);
+  border-color: rgba(201, 162, 39, .45);
+}
+
+.rk-about__pillarIcon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 4px;
+  border-radius: var(--rk-r-md);
+  background: var(--rk-green-800);
+  color: var(--rk-gold-300);
+  font-size: 1.5rem;
+}
+
+.rk-about__pillarTitle {
+  font-size: 1.25rem;
+}
+
+.rk-about__pillarText {
+  font-size: .94rem;
+  line-height: 1.7;
+  color: var(--rk-body);
+}
+
+/* ---------- Milestones ---------- */
+
+.rk-about__milestones {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: clamp(28px, 4vw, 48px);
+  padding-left: 34px;
+}
+
+/* The vertical rail. */
+.rk-about__milestones::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 9px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--rk-gold-500), rgba(201, 162, 39, .12));
+}
+
+.rk-about__milestone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.rk-about__msDot {
+  position: absolute;
+  top: 8px;
+  left: -34px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--rk-white);
+  border: 3px solid var(--rk-gold-500);
+  box-shadow: 0 0 0 4px var(--rk-cream);
+}
+
+.rk-about__msYear {
+  font-family: var(--rk-font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--rk-green-700);
+  line-height: 1.1;
+}
+
+.rk-about__msTitle {
+  font-size: 1.12rem;
+  margin-bottom: 4px;
+}
+
+.rk-about__msText {
+  font-size: .94rem;
+  line-height: 1.7;
+  color: var(--rk-body);
+  max-width: 68ch;
+}
+
+/* ---------- Team ---------- */
+
+.rk-about__teamGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(18px, 2.4vw, 28px);
+  margin-top: clamp(28px, 4vw, 48px);
+}
+
+.rk-about__member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  padding: clamp(20px, 2.6vw, 28px);
+  text-align: center;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  background: var(--rk-cream);
+  box-shadow: var(--rk-sh-sm);
+  transition: transform var(--rk-t), box-shadow var(--rk-t), border-color var(--rk-t);
+}
+
+.rk-about__member:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--rk-sh-md);
+  border-color: rgba(201, 162, 39, .45);
+}
+
+.rk-about__memberMedia {
+  width: 130px;
+  height: 130px;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--rk-surface);
+  box-shadow: 0 0 0 4px var(--rk-white), 0 0 0 6px var(--rk-gold-300);
+}
+
+.rk-about__memberMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rk-about__memberName {
+  font-size: 1.12rem;
+}
+
+.rk-about__memberRole {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--rk-gold-600);
+}
+
+.rk-about__memberNote {
+  font-size: .88rem;
+  line-height: 1.65;
+  color: var(--rk-body);
+}
+
+/* ---------- Closing CTA ---------- */
+
+.rk-about__ctaCard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  padding: clamp(26px, 4vw, 52px);
+  border-radius: var(--rk-r-xl);
+  background:
+    radial-gradient(90% 130% at 8% 0%, rgba(27, 107, 79, .6), transparent 62%),
+    var(--rk-green-800);
+  color: rgba(255, 255, 255, .84);
+  box-shadow: var(--rk-sh-lg);
+  border: 1px solid rgba(201, 162, 39, .28);
+}
+
+.rk-about__ctaTitle {
+  margin-top: 10px;
+  font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.3rem);
+  color: var(--rk-white);
+}
+
+.rk-about__ctaTitle em {
+  font-style: italic;
+  color: var(--rk-gold-400);
+}
+
+.rk-about__ctaText {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 60ch;
+}
+
+.rk-about__ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 768px) {
+  .rk-about__pillarGrid,
+  .rk-about__teamGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rk-about__milestone {
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 0 24px;
+    align-items: start;
+  }
+
+  .rk-about__msYear {
+    text-align: right;
+    padding-top: 2px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rk-about__storyRow {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  }
+
+  .rk-about__ctaCard {
+    grid-template-columns: minmax(0, 1.6fr) auto;
+  }
+
+  .rk-about__ctaActions {
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 1080px) {
+  .rk-about__pillarGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .rk-about__teamGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-about__collageItem:hover img,
+  .rk-about__pillar:hover,
+  .rk-about__member:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,151 @@
+/* Home §14a — CTA + enquiry form */
+
+.rk-cta__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(22px, 3vw, 40px);
+  align-items: stretch;
+}
+
+/* ---- Left: deep green panel ---- */
+
+.rk-cta__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(26px, 4vw, 52px);
+  overflow: hidden;
+  border-radius: var(--rk-r-xl);
+  background:
+    radial-gradient(70% 90% at 100% 0%, rgba(27, 107, 79, .6), transparent 60%),
+    var(--rk-green-800);
+  box-shadow: var(--rk-sh-md);
+  color: rgba(255, 255, 255, .82);
+}
+
+/* gold corner flourish */
+.rk-cta__flourish {
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 210px;
+  height: 210px;
+  border: 2px solid rgba(201, 162, 39, .45);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.rk-cta__flourish::after {
+  content: '';
+  position: absolute;
+  inset: 34px;
+  border: 1px solid rgba(235, 215, 154, .35);
+  border-radius: 50%;
+}
+
+.rk-cta__title {
+  font-size: clamp(1.7rem, 1.2rem + 2.1vw, 2.6rem);
+  color: var(--rk-white);
+  line-height: 1.15;
+}
+
+.rk-cta__title em { font-style: italic; color: var(--rk-gold-300); }
+
+.rk-cta__text {
+  max-width: 52ch;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, .78);
+}
+
+.rk-cta__points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.rk-cta__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .92rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .82);
+}
+
+.rk-cta__points svg { flex: none; margin-top: 3px; color: var(--rk-gold-400); font-size: 1.1rem; }
+
+.rk-cta__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.rk-cta__line {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  min-height: 64px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--rk-r-md);
+  background: rgba(255, 255, 255, .05);
+  color: var(--rk-white);
+  font-family: var(--rk-font-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  transition: background var(--rk-t), border-color var(--rk-t), transform var(--rk-t);
+}
+
+.rk-cta__line:hover {
+  background: rgba(255, 255, 255, .1);
+  border-color: rgba(201, 162, 39, .55);
+  color: var(--rk-white);
+  transform: translateX(4px);
+}
+
+.rk-cta__line small {
+  display: block;
+  font-family: var(--rk-font-body);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--rk-gold-300);
+}
+
+.rk-cta__lineIcon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rk-gold-400), var(--rk-gold-600));
+  color: var(--rk-green-900);
+  font-size: 1.3rem;
+}
+
+.rk-cta__lineIcon--wa { background: linear-gradient(135deg, var(--rk-green-500), var(--rk-green-700)); color: var(--rk-white); }
+
+/* ---- Right: elevated white form card ---- */
+
+.rk-cta__card {
+  padding: clamp(20px, 3vw, 34px);
+  background: var(--rk-white);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-xl);
+  box-shadow: var(--rk-sh-lg);
+}
+
+@media (min-width: 1024px) {
+  .rk-cta__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-cta__line:hover { transform: none; }
+}

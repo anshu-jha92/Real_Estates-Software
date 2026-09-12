@@ -1,0 +1,210 @@
+.rk-mobilenav {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  visibility: hidden;
+  transition: visibility 0s linear .35s;
+}
+
+.rk-mobilenav.is-open {
+  visibility: visible;
+  transition: visibility 0s;
+}
+
+.rk-mobilenav__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: rgba(8, 37, 27, .62);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity var(--rk-t);
+}
+
+.rk-mobilenav.is-open .rk-mobilenav__backdrop { opacity: 1; }
+
+.rk-mobilenav__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(400px, 92vw);
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-lg);
+  transform: translateX(102%);
+  transition: transform var(--rk-t);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.rk-mobilenav.is-open .rk-mobilenav__panel { transform: translateX(0); }
+
+/* ---------- Head ---------- */
+
+.rk-mobilenav__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--rk-cream);
+  border-bottom: 1px solid var(--rk-line);
+}
+
+.rk-mobilenav__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--rk-r-md);
+  border: 1px solid var(--rk-line);
+  background: var(--rk-white);
+  color: var(--rk-green-800);
+  font-size: 1.4rem;
+  transition: background-color var(--rk-t), color var(--rk-t), border-color var(--rk-t);
+}
+
+.rk-mobilenav__close:hover,
+.rk-mobilenav__close:focus-visible {
+  background: var(--rk-green-800);
+  border-color: var(--rk-green-800);
+  color: var(--rk-gold-300);
+}
+
+/* ---------- Links ---------- */
+
+.rk-mobilenav__nav { padding: 8px 18px 4px; }
+
+.rk-mobilenav__item { border-bottom: 1px solid var(--rk-line); }
+
+.rk-mobilenav__row { display: flex; align-items: center; }
+
+.rk-mobilenav__link {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 10px 2px;
+  color: var(--rk-green-900);
+  font-family: var(--rk-font-display);
+  font-size: 1.06rem;
+  font-weight: 600;
+  transition: color var(--rk-t), padding-left var(--rk-t);
+}
+
+.rk-mobilenav__link:hover,
+.rk-mobilenav__link.active {
+  color: var(--rk-gold-600);
+  padding-left: 8px;
+}
+
+.rk-mobilenav__toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--rk-r-sm);
+  color: var(--rk-green-700);
+  font-size: 1.3rem;
+  transition: transform var(--rk-t), background-color var(--rk-t);
+}
+
+.rk-mobilenav__toggle:hover,
+.rk-mobilenav__toggle:focus-visible { background: var(--rk-green-50); }
+
+.rk-mobilenav__toggle.is-open { transform: rotate(180deg); color: var(--rk-gold-600); }
+
+.rk-mobilenav__sublist {
+  padding: 2px 0 12px 14px;
+  border-left: 2px solid var(--rk-gold-300);
+  margin-bottom: 8px;
+}
+
+.rk-mobilenav__sublink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 4px;
+  color: var(--rk-body);
+  font-size: .92rem;
+  font-weight: 600;
+  transition: color var(--rk-t), padding-left var(--rk-t);
+}
+
+.rk-mobilenav__sublink:hover,
+.rk-mobilenav__sublink.active { color: var(--rk-green-800); padding-left: 10px; }
+
+/* ---------- Contact block ---------- */
+
+.rk-mobilenav__contact {
+  margin-top: auto;
+  padding: 20px 18px 26px;
+  background: var(--rk-green-900);
+  color: rgba(255, 255, 255, .8);
+}
+
+.rk-mobilenav__contact-title {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--rk-gold-300);
+  margin-bottom: 12px;
+}
+
+.rk-mobilenav__contact-list { display: grid; gap: 11px; font-size: .88rem; }
+
+.rk-mobilenav__contact-list li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  align-items: start;
+  line-height: 1.5;
+}
+
+.rk-mobilenav__contact-list svg { color: var(--rk-gold-400); font-size: 1.05rem; margin-top: 2px; }
+
+.rk-mobilenav__contact-list a { color: var(--rk-white); }
+.rk-mobilenav__contact-list a:hover { color: var(--rk-gold-300); }
+
+.rk-mobilenav__cta { display: grid; gap: 10px; margin-top: 20px; }
+
+.rk-mobilenav__cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.rk-mobilenav__cta-row .rk-btn--outline {
+  color: var(--rk-white);
+  border-color: rgba(255, 255, 255, .4);
+}
+
+.rk-mobilenav__cta-row .rk-btn--outline:hover,
+.rk-mobilenav__cta-row .rk-btn--outline:focus-visible {
+  background: var(--rk-gold-500);
+  border-color: var(--rk-gold-500);
+  color: var(--rk-green-900);
+}
+
+.rk-mobilenav__cta-row .rk-btn--green { background: var(--rk-success); }
+.rk-mobilenav__cta-row .rk-btn--green:hover { background: var(--rk-green-600); }
+
+/* No desktop `display:none` on purpose: if the viewport grows past 1024px
+   while the drawer is open it stays visible and closable instead of leaving
+   the page scroll-locked behind an invisible dialog. */
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-mobilenav,
+  .rk-mobilenav__panel,
+  .rk-mobilenav__backdrop { transition: none; }
+  .rk-mobilenav__link:hover,
+  .rk-mobilenav__sublink:hover { padding-left: 2px; }
+}

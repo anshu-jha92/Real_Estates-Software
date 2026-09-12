@@ -1,0 +1,104 @@
+/* Rama Kripa Estates — hero search card (frosted glass) */
+
+/* Spans the full container — the headline above it stays narrow on its own. */
+.rk-hsearch {
+  width: 100%;
+}
+
+.rk-hsearch__tabs { margin-bottom: 12px; }
+
+.rk-hsearch__form {
+  padding: clamp(12px, 2vw, 18px);
+  border: 1px solid rgba(235, 215, 154, .28);
+  border-radius: var(--rk-r-lg);
+  /* Solid fallback first — browsers without backdrop-filter still get contrast. */
+  background: rgba(8, 37, 27, .78);
+  box-shadow: var(--rk-sh-lg);
+}
+
+@supports ((backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px))) {
+  .rk-hsearch__form {
+    background: rgba(8, 37, 27, .44);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+  }
+}
+
+.rk-hsearch__fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rk-hsearch__field {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.rk-hsearch__field .rk-input,
+.rk-hsearch__field .rk-select { width: 100%; }
+
+.rk-hsearch__more-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.rk-hsearch__more-group > .rk-hsearch__field { flex: 1 1 100%; }
+
+/* "More filters" disclosure — mobile only. */
+.rk-hsearch__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1 1 100%;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px dashed rgba(235, 215, 154, .5);
+  border-radius: var(--rk-r-pill);
+  background: rgba(255, 255, 255, .06);
+  color: var(--rk-gold-300);
+  font-family: var(--rk-font-body);
+  font-size: .84rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background var(--rk-t), color var(--rk-t);
+}
+
+.rk-hsearch__more:hover { background: rgba(255, 255, 255, .12); color: var(--rk-gold-400); }
+
+.rk-hsearch__submit {
+  flex: 1 1 100%;
+  justify-content: center;
+}
+
+/* Below 900px the extra selects stay behind the disclosure so the hero
+   keeps breathing room on a phone. */
+@media (max-width: 899px) {
+  .rk-hsearch__more-group:not(.is-open) { display: none; }
+}
+
+@media (min-width: 900px) {
+  .rk-hsearch__more { display: none; }
+  .rk-hsearch__field--search { flex: 2 1 240px; }
+  .rk-hsearch__more-group { flex: 3 1 460px; }
+  .rk-hsearch__more-group > .rk-hsearch__field { flex: 1 1 130px; }
+  .rk-hsearch__submit { flex: 0 0 auto; }
+}
+
+@media (min-width: 1180px) {
+  .rk-hsearch__form { padding: 16px; }
+  /* All four selects share one row, each wide enough that "Property Type" and
+     "Location / Sector" are never clipped. */
+  .rk-hsearch__field--search { flex: 2 1 260px; }
+  .rk-hsearch__more-group { flex: 4 1 640px; }
+  .rk-hsearch__more-group > .rk-hsearch__field { flex: 1 1 150px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-hsearch__more { transition: none; }
+}

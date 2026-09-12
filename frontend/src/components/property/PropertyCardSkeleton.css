@@ -1,0 +1,97 @@
+/* Rama Kripa Estates — PropertyCard loading placeholder (mirrors PropertyCard.css) */
+
+.rk-pskel {
+  display: flex;
+  flex-direction: column;
+  background: var(--rk-white);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  box-shadow: var(--rk-sh-sm);
+  overflow: hidden;
+}
+
+.rk-pskel__media {
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  border-radius: 0;
+  flex: none;
+}
+
+.rk-pskel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  padding: 18px clamp(16px, 2.2vw, 22px) 14px;
+}
+
+.rk-pskel__price { width: 46%; height: 26px; border-radius: var(--rk-r-pill); }
+.rk-pskel__title { width: 92%; height: 15px; border-radius: var(--rk-r-pill); }
+.rk-pskel__title--short { width: 64%; }
+.rk-pskel__place { width: 74%; height: 12px; border-radius: var(--rk-r-pill); }
+
+.rk-pskel__specs {
+  display: flex;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.rk-pskel__specs span {
+  height: 12px;
+  border-radius: var(--rk-r-pill);
+  flex: 1 1 0;
+  max-width: 88px;
+}
+
+.rk-pskel__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px clamp(16px, 2.2vw, 22px);
+  border-top: 1px solid var(--rk-line);
+  background: var(--rk-cream);
+  min-height: 53px;
+}
+
+.rk-pskel__dev { width: 38%; height: 12px; border-radius: var(--rk-r-pill); }
+.rk-pskel__more { width: 96px; height: 12px; border-radius: var(--rk-r-pill); }
+
+/* ---------- wide ---------- */
+
+@media (min-width: 768px) {
+  .rk-pskel--wide {
+    display: grid;
+    grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+  }
+
+  .rk-pskel--wide .rk-pskel__media {
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 216px;
+  }
+}
+
+/* ---------- compact ---------- */
+
+.rk-pskel--compact {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: var(--rk-r-md);
+}
+
+.rk-pskel--compact .rk-pskel__media {
+  width: 88px;
+  height: 88px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--rk-r-sm);
+}
+
+.rk-pskel--compact .rk-pskel__body { padding: 2px 0; gap: 8px; }
+.rk-pskel--compact .rk-pskel__price { height: 16px; width: 40%; }
+.rk-pskel--compact .rk-pskel__specs { display: none; }

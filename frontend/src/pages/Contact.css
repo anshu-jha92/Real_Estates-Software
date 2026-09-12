@@ -1,0 +1,423 @@
+/* Contact page — BUILD_SPEC §6. Mobile-first. */
+
+.rk-contact {
+  background: var(--rk-cream);
+}
+
+/* ---------- Form + info row ---------- */
+
+.rk-contact__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(22px, 3vw, 36px);
+  align-items: start;
+}
+
+.rk-contact__formCard {
+  gap: 22px;
+  border-radius: var(--rk-r-xl);
+  box-shadow: var(--rk-sh-md);
+}
+
+.rk-contact__formCard .rk-sectiontitle {
+  margin-bottom: 4px;
+}
+
+/* Intro line already lives inside ContactForm; keep it reading as a lead. */
+.rk-contact__formCard .rk-contactForm__intro {
+  color: var(--rk-body);
+}
+
+/* ---------- Sticky info card ---------- */
+
+.rk-contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(22px, 3vw, 32px);
+  border-radius: var(--rk-r-xl);
+  background:
+    radial-gradient(120% 100% at 100% 0%, rgba(27, 107, 79, .55), transparent 62%),
+    var(--rk-green-800);
+  color: rgba(255, 255, 255, .84);
+  box-shadow: var(--rk-sh-lg);
+  border: 1px solid rgba(201, 162, 39, .28);
+}
+
+.rk-contact__logo {
+  align-self: flex-start;
+}
+
+.rk-contact__infoTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  color: var(--rk-gold-300);
+}
+
+.rk-contact__brand {
+  font-family: var(--rk-font-display);
+  font-size: clamp(1.35rem, 1.15rem + .8vw, 1.7rem);
+  font-weight: 700;
+  color: var(--rk-white);
+  line-height: 1.2;
+}
+
+.rk-contact__brand::after {
+  content: '';
+  display: block;
+  width: 58px;
+  height: 3px;
+  margin-top: 12px;
+  border-radius: var(--rk-r-pill);
+  background: linear-gradient(90deg, var(--rk-gold-400), rgba(201, 162, 39, 0));
+}
+
+.rk-contact__list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.rk-contact__listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.rk-contact__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--rk-r-md);
+  background: rgba(201, 162, 39, .16);
+  color: var(--rk-gold-300);
+  font-size: 1.2rem;
+}
+
+.rk-contact__itemBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.rk-contact__itemLabel {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+}
+
+.rk-contact__address {
+  display: flex;
+  flex-direction: column;
+  color: var(--rk-white);
+  font-size: .96rem;
+  line-height: 1.55;
+}
+
+.rk-contact__value {
+  color: var(--rk-white);
+  font-size: .96rem;
+}
+
+.rk-contact__note {
+  font-size: .82rem;
+  color: rgba(255, 255, 255, .6);
+}
+
+.rk-contact__link {
+  display: inline-block;
+  min-height: 28px;
+  color: var(--rk-white);
+  font-size: .96rem;
+  word-break: break-word;
+  transition: color var(--rk-t);
+}
+
+.rk-contact__link:hover,
+.rk-contact__link:focus-visible {
+  color: var(--rk-gold-300);
+}
+
+.rk-contact__whatsapp {
+  margin-top: 2px;
+}
+
+.rk-contact__socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+}
+
+.rk-contact__socialLabel {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+}
+
+.rk-contact__socialList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rk-contact__social {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .06);
+  color: var(--rk-white);
+  font-size: 1rem;
+  transition: background-color var(--rk-t), color var(--rk-t), border-color var(--rk-t), transform var(--rk-t);
+}
+
+.rk-contact__social:hover,
+.rk-contact__social:focus-visible {
+  background: var(--rk-gold-500);
+  border-color: var(--rk-gold-500);
+  color: var(--rk-green-900);
+  transform: translateY(-2px);
+}
+
+/* ---------- Map + address strip ---------- */
+
+.rk-contact__map .rk-map__frame {
+  height: 460px;
+  border-radius: var(--rk-r-xl);
+}
+
+.rk-contact__strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 18px;
+  padding: 16px clamp(16px, 2.5vw, 24px);
+  border: 1px solid var(--rk-line);
+  border-left: 4px solid var(--rk-gold-500);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-cream);
+  font-size: .95rem;
+  color: var(--rk-body);
+}
+
+.rk-contact__stripIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--rk-gold-50);
+  color: var(--rk-gold-600);
+  font-size: 1.1rem;
+}
+
+.rk-contact__stripText {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.rk-contact__stripText strong {
+  color: var(--rk-green-800);
+}
+
+.rk-contact__stripLink {
+  flex: none;
+  min-height: 44px;
+  align-items: center;
+}
+
+/* ---------- Quick-contact tiles ---------- */
+
+.rk-contact__tiles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.4vw, 26px);
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.rk-contact__tile {
+  height: 100%;
+  gap: 10px;
+  padding: clamp(22px, 3vw, 30px);
+  text-align: left;
+  color: var(--rk-body);
+}
+
+.rk-contact__tileIcon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 6px;
+  border-radius: var(--rk-r-md);
+  background: var(--rk-green-50);
+  color: var(--rk-green-700);
+  font-size: 1.5rem;
+  transition: background-color var(--rk-t), color var(--rk-t);
+}
+
+.rk-contact__tile:hover .rk-contact__tileIcon,
+.rk-contact__tile:focus-visible .rk-contact__tileIcon {
+  background: var(--rk-gold-500);
+  color: var(--rk-green-900);
+}
+
+.rk-contact__tileTitle {
+  font-family: var(--rk-font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--rk-ink);
+}
+
+.rk-contact__tileText {
+  font-size: .92rem;
+  line-height: 1.6;
+  color: var(--rk-body);
+}
+
+.rk-contact__tileValue {
+  font-weight: 700;
+  color: var(--rk-green-800);
+  word-break: break-word;
+}
+
+.rk-contact__tileCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: .84rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--rk-gold-600);
+}
+
+.rk-contact__tile:hover .rk-contact__tileCta svg,
+.rk-contact__tile:focus-visible .rk-contact__tileCta svg {
+  transform: translateX(4px);
+}
+
+.rk-contact__tileCta svg {
+  transition: transform var(--rk-t);
+}
+
+/* ---------- FAQ ---------- */
+
+.rk-contact__faqGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 3.4vw, 44px);
+  align-items: start;
+}
+
+.rk-contact__faqAside {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.rk-contact__faqCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-contact__faqCardIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--rk-r-md);
+  background: var(--rk-gold-50);
+  color: var(--rk-gold-600);
+  font-size: 1.4rem;
+}
+
+.rk-contact__faqCardText {
+  font-size: .95rem;
+  line-height: 1.65;
+  color: var(--rk-body);
+}
+
+.rk-contact__accordion {
+  background: var(--rk-white);
+  border-radius: var(--rk-r-lg);
+  overflow: hidden;
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-contact__accordion p + p {
+  margin-top: 12px;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 768px) {
+  .rk-contact__tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .rk-contact__row {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  }
+
+  .rk-contact__info {
+    position: sticky;
+    top: calc(var(--rk-header-h) + 20px);
+  }
+
+  .rk-contact__faqGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  }
+
+  .rk-contact__faqAside {
+    position: sticky;
+    top: calc(var(--rk-header-h) + 20px);
+  }
+}
+
+@media (min-width: 1080px) {
+  .rk-contact__tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  /* Override MapEmbed's small-screen cap — the spec asks for a tall map. */
+  .rk-contact__map .rk-map__frame {
+    height: 420px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-contact__social:hover,
+  .rk-contact__social:focus-visible,
+  .rk-contact__tile:hover .rk-contact__tileCta svg {
+    transform: none;
+  }
+}

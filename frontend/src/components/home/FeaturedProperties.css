@@ -1,0 +1,20 @@
+/* Rama Kripa Estates — featured portfolio block */
+
+.rk-featured__tabs {
+  margin-block: clamp(18px, 2.6vw, 28px);
+}
+
+.rk-featured__panel {
+  min-height: 240px;
+}
+
+.rk-featured__more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 46px);
+}
+
+@media (min-width: 768px) {
+  /* Centre the tab row once it comfortably fits on one line. */
+  .rk-featured__tabs { justify-content: center; }
+}

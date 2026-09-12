@@ -1,0 +1,165 @@
+/* Rama Kripa Estates — FilterBar (sticky mobile bar + active chip row) */
+
+.rk-filterbar {
+  position: sticky;
+  top: var(--rk-header-h);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-block: 10px;
+  background: var(--rk-cream);
+}
+
+.rk-filterbar__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-filterbar__open {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-green-800);
+  color: var(--rk-white);
+  font-size: .86rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background var(--rk-t);
+}
+
+.rk-filterbar__open:hover { background: var(--rk-green-700); }
+.rk-filterbar__open svg { font-size: 1.15rem; }
+
+.rk-filterbar__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding-inline: 6px;
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-gold-500);
+  color: var(--rk-green-900);
+  font-size: .72rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.rk-filterbar__result {
+  flex: 1;
+  min-width: 0;
+  font-size: .86rem;
+  font-weight: 600;
+  color: var(--rk-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-filterbar__sort { flex: none; }
+
+/* ---------- Chip row ---------- */
+
+.rk-filterbar__chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rk-filterbar__chipslabel {
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--rk-muted);
+}
+
+.rk-filterbar__chiplist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  min-width: 0;
+}
+
+.rk-filterbar__chip { max-width: 100%; }
+
+.rk-filterbar__chip > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 22ch;
+}
+
+.rk-filterbar__clear {
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: var(--rk-r-pill);
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--rk-danger);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color var(--rk-t);
+}
+
+.rk-filterbar__clear:hover { color: var(--rk-green-800); }
+
+/* ---------- Bottom sheet ---------- */
+
+.rk-filterbar__panel {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.rk-filterbar__panel .rk-fsb__head { display: none; }
+.rk-filterbar__panel .rk-fsb__group:first-of-type { border-top: 0; }
+
+.rk-filterbar__sheet .rk-modal__body { padding: 0; }
+
+@media (max-width: 1023px) {
+  /* Progressive enhancement: browsers without :has() simply keep the centred dialog */
+  .rk-modal:has(.rk-filterbar__sheet) {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .rk-filterbar__sheet.rk-modal__panel {
+    margin-top: auto;
+    max-width: none;
+    max-height: 88svh;
+    border-radius: var(--rk-r-xl) var(--rk-r-xl) 0 0;
+  }
+}
+
+/* The sheet trigger is desktop-redundant: the sidebar is always on screen */
+@media (min-width: 1024px) {
+  .rk-filterbar { background: transparent; }
+  .rk-filterbar__open { display: none; }
+}
+
+@media (max-width: 560px) {
+  .rk-filterbar__bar { flex-wrap: wrap; }
+  .rk-filterbar__result { order: 3; flex: 1 0 100%; }
+  .rk-filterbar__sort { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-filterbar__open,
+  .rk-filterbar__clear { transition: none; }
+}

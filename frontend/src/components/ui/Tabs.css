@@ -1,0 +1,111 @@
+.rk-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+
+.rk-tabs::-webkit-scrollbar { display: none; }
+
+.rk-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-white);
+  color: var(--rk-body);
+  font-size: .88rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transition: all var(--rk-t);
+}
+
+.rk-tabs__tab:hover { border-color: var(--rk-gold-400); color: var(--rk-green-800); }
+
+.rk-tabs__tab.is-active {
+  background: var(--rk-green-800);
+  border-color: var(--rk-green-800);
+  color: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-tabs__icon { display: grid; place-items: center; font-size: 1.1rem; }
+
+.rk-tabs__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding-inline: 6px;
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-surface);
+  color: var(--rk-muted);
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.rk-tabs__tab.is-active .rk-tabs__count {
+  background: var(--rk-gold-500);
+  color: var(--rk-green-900);
+}
+
+/* underline variant */
+.rk-tabs--underline { gap: 4px; border-bottom: 1px solid var(--rk-line); }
+
+.rk-tabs--underline .rk-tabs__tab {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding-inline: 14px;
+  position: relative;
+}
+
+.rk-tabs--underline .rk-tabs__tab::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -1px;
+  height: 2px;
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-gold-500);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--rk-t);
+}
+
+.rk-tabs--underline .rk-tabs__tab.is-active {
+  background: transparent;
+  color: var(--rk-green-800);
+  box-shadow: none;
+}
+
+.rk-tabs--underline .rk-tabs__tab.is-active::after { transform: scaleX(1); }
+
+/* glass variant, for use on the hero card */
+.rk-tabs--glass .rk-tabs__tab {
+  background: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .26);
+  color: var(--rk-white);
+  backdrop-filter: blur(6px);
+}
+
+.rk-tabs--glass .rk-tabs__tab:hover { background: rgba(255, 255, 255, .2); color: var(--rk-white); }
+
+.rk-tabs--glass .rk-tabs__tab.is-active {
+  background: linear-gradient(135deg, var(--rk-gold-400), var(--rk-gold-600));
+  border-color: transparent;
+  color: var(--rk-green-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-tabs--underline .rk-tabs__tab::after { transition: none; }
+}

@@ -1,0 +1,219 @@
+/* Rama Kripa Estates — ImageGallery */
+
+.rk-gal { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.rk-gal__main {
+  position: relative;
+  border-radius: var(--rk-r-lg);
+  overflow: hidden;
+  background: var(--rk-surface);
+  box-shadow: var(--rk-sh-md);
+  touch-action: pan-y;
+}
+
+.rk-gal__stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: var(--rk-surface);
+  padding: 0;
+  border: 0;
+}
+
+/* Two photos share the stage during a change: the old one sits underneath,
+   the new one fades in on top. Keep the duration in step with FADE_MS. */
+.rk-gal__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s var(--rk-ease);
+}
+.rk-gal__img--under { z-index: 0; }
+.rk-gal__img--in { z-index: 1; animation: rkGalFadeIn .9s ease both; }
+
+@keyframes rkGalFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.rk-gal__main:hover .rk-gal__img { transform: scale(1.03); }
+
+.rk-gal__zoom {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(8, 37, 27, .55);
+  color: var(--rk-white);
+  font-size: 1.1rem;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* ---------- Arrows ---------- */
+
+.rk-gal__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(8, 37, 27, .58);
+  color: var(--rk-white);
+  font-size: 1.6rem;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: background var(--rk-t), color var(--rk-t);
+}
+
+.rk-gal__nav:hover { background: var(--rk-gold-500); color: var(--rk-green-900); border-color: var(--rk-gold-500); }
+.rk-gal__nav--prev { left: 12px; }
+.rk-gal__nav--next { right: 12px; }
+
+/* ---------- Counter + dots ---------- */
+
+.rk-gal__counter {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  padding: 6px 13px;
+  border-radius: var(--rk-r-pill);
+  background: rgba(8, 37, 27, .62);
+  color: var(--rk-white);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  backdrop-filter: blur(4px);
+}
+
+.rk-gal__dots {
+  position: absolute;
+  right: 14px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 55%;
+  overflow: hidden;
+  list-style: none;
+}
+
+.rk-gal__dot {
+  display: block;
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .5);
+  cursor: pointer;
+  transition: background var(--rk-t), width var(--rk-t);
+}
+
+.rk-gal__dot:hover { background: var(--rk-white); }
+.rk-gal__dot.is-active { width: 24px; border-radius: var(--rk-r-pill); background: var(--rk-gold-500); }
+
+/* ---------- Thumbnail strip ---------- */
+
+.rk-gal__strip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  list-style: none;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
+.rk-gal__thumbitem { flex: none; scroll-snap-align: start; }
+
+.rk-gal__thumb {
+  display: block;
+  width: 104px;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--rk-r-sm);
+  overflow: hidden;
+  background: var(--rk-surface);
+  cursor: pointer;
+  opacity: .72;
+  transition: opacity var(--rk-t), border-color var(--rk-t), transform var(--rk-t);
+}
+
+.rk-gal__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rk-gal__thumb:hover { opacity: 1; transform: translateY(-2px); }
+.rk-gal__thumb.is-active { opacity: 1; border-color: var(--rk-gold-500); }
+
+/* ---------- Lightbox ---------- */
+
+.rk-gal__lightbox.rk-modal__panel { background: var(--rk-green-900); }
+.rk-gal__lightbox .rk-modal__head { border-bottom-color: rgba(255, 255, 255, .12); }
+.rk-gal__lightbox .rk-modal__title { color: var(--rk-white); }
+.rk-gal__lightbox .rk-modal__close { color: var(--rk-gold-300); }
+.rk-gal__lightbox .rk-modal__close:hover { background: rgba(255, 255, 255, .1); color: var(--rk-white); }
+.rk-gal__lightbox .rk-modal__body { background: var(--rk-green-900); }
+
+.rk-gal__lbstage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.rk-gal__lbimg {
+  max-width: 100%;
+  max-height: min(72svh, 760px);
+  width: auto;
+  object-fit: contain;
+  border-radius: var(--rk-r-md);
+  background: var(--rk-green-800);
+}
+
+.rk-gal__lbcounter {
+  margin-top: 14px;
+  text-align: center;
+  font-size: .82rem;
+  color: rgba(255, 255, 255, .74);
+}
+
+@media (max-width: 767px) {
+  .rk-gal__nav { width: 42px; height: 42px; font-size: 1.35rem; }
+  .rk-gal__nav--prev { left: 8px; }
+  .rk-gal__nav--next { right: 8px; }
+  .rk-gal__thumb { width: 84px; }
+  .rk-gal__dots { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-gal__img,
+  .rk-gal__thumb,
+  .rk-gal__dot,
+  .rk-gal__nav { transition: none; }
+
+  .rk-gal__main:hover .rk-gal__img,
+  .rk-gal__thumb:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-gal__img--in { animation: none; }
+}

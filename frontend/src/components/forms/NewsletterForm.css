@@ -1,0 +1,146 @@
+/* NewsletterForm — email + gold arrow button. Lives in the deep-green footer. */
+
+.rk-newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 100%;
+}
+
+.rk-newsletter__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rk-gold-300);
+}
+
+.rk-newsletter__row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+}
+
+.rk-newsletter__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: var(--rk-white);
+}
+
+.rk-newsletter__input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+  opacity: 1;
+}
+
+.rk-newsletter__input:hover {
+  border-color: var(--rk-gold-400);
+}
+
+.rk-newsletter__input:focus,
+.rk-newsletter__input:focus-visible {
+  border-color: var(--rk-gold-500);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.24);
+}
+
+.rk-newsletter__btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--rk-r-md);
+  background: linear-gradient(135deg, var(--rk-gold-500), var(--rk-gold-600));
+  color: var(--rk-green-900);
+  font-size: 1.35rem;
+  cursor: pointer;
+  box-shadow: var(--rk-sh-gold);
+  transition: transform var(--rk-t), box-shadow var(--rk-t), filter var(--rk-t);
+}
+
+.rk-newsletter__btn:hover {
+  transform: translateX(2px);
+  filter: brightness(1.06);
+}
+
+.rk-newsletter__btn:focus-visible {
+  outline: 3px solid var(--rk-gold-300);
+  outline-offset: 3px;
+}
+
+.rk-newsletter__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
+}
+
+.rk-newsletter__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(8, 37, 27, 0.3);
+  border-top-color: var(--rk-green-900);
+  border-radius: var(--rk-r-pill);
+}
+
+.rk-newsletter__msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.rk-newsletter__msg svg {
+  flex: none;
+  margin-top: 2px;
+  font-size: 1rem;
+}
+
+.rk-newsletter__msg--ok {
+  color: var(--rk-gold-300);
+}
+
+.rk-newsletter__msg--error {
+  color: var(--rk-gold-400);
+  font-weight: 600;
+}
+
+/* On a light/cream surface, flip the palette. */
+.rk-newsletter--light .rk-newsletter__label {
+  color: var(--rk-green-800);
+}
+
+.rk-newsletter--light .rk-newsletter__input {
+  background: var(--rk-white);
+  border-color: var(--rk-line);
+  color: var(--rk-ink);
+}
+
+.rk-newsletter--light .rk-newsletter__input::placeholder {
+  color: var(--rk-muted);
+}
+
+.rk-newsletter--light .rk-newsletter__msg--ok {
+  color: var(--rk-success);
+}
+
+.rk-newsletter--light .rk-newsletter__msg--error {
+  color: var(--rk-danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-newsletter__btn {
+    transition: none;
+  }
+
+  .rk-newsletter__btn:hover {
+    transform: none;
+  }
+}

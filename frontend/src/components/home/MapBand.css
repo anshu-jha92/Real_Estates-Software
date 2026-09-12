@@ -1,0 +1,97 @@
+/* Home §14b — Office map band */
+
+.rk-mapband__wrap {
+  position: relative;
+  margin-top: clamp(26px, 3.6vw, 44px);
+}
+
+/* the frame's own radius/shadow come from MapEmbed.css — just soften the corners */
+.rk-mapband__map .rk-map__frame { border-radius: var(--rk-r-xl); }
+
+.rk-mapband__card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: -28px;
+  margin-inline: clamp(0px, 3vw, 24px);
+  padding: clamp(22px, 3vw, 30px);
+  background: var(--rk-white);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  box-shadow: var(--rk-sh-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.rk-mapband__cardTitle {
+  font-family: var(--rk-font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--rk-green-800);
+}
+
+.rk-mapband__tagline {
+  margin-top: -6px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--rk-gold-600);
+}
+
+.rk-mapband__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rk-line);
+}
+
+.rk-mapband__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .95rem;
+  line-height: 1.6;
+  color: var(--rk-body);
+}
+
+.rk-mapband__list li > svg {
+  flex: none;
+  margin-top: 2px;
+  font-size: 1.25rem;
+  color: var(--rk-gold-600);
+}
+
+.rk-mapband__list li > span { display: flex; flex-direction: column; }
+
+.rk-mapband__list small {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--rk-muted);
+}
+
+.rk-mapband__list a { color: var(--rk-green-800); font-weight: 600; }
+.rk-mapband__list a:hover { color: var(--rk-gold-600); }
+
+.rk-mapband__line { display: block; }
+
+.rk-mapband__directions {
+  align-self: flex-start;
+  margin-top: 4px;
+  min-height: 44px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .rk-mapband__card {
+    position: absolute;
+    top: 50%;
+    right: clamp(24px, 4vw, 56px);
+    width: min(360px, 38%);
+    margin: 0;
+    transform: translateY(-50%);
+  }
+}

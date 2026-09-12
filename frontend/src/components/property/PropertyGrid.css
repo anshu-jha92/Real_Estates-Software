@@ -1,0 +1,28 @@
+/* Rama Kripa Estates — PropertyGrid layouts */
+
+.rk-pgrid {
+  display: grid;
+  gap: clamp(18px, 2.4vw, 30px);
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+.rk-pgrid__item { display: flex; }
+.rk-pgrid__item > * { width: 100%; }
+
+/* grid variant: 1 col mobile, 2 col tablet, 3 col desktop (BUILD_SPEC §2) */
+@media (min-width: 768px) {
+  .rk-pgrid--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1080px) {
+  .rk-pgrid--grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* wide variant: always a single column of horizontal cards */
+.rk-pgrid--wide { gap: clamp(16px, 2vw, 22px); }
+
+/* compact variant: tight stack for sidebars and similar lists */
+.rk-pgrid--compact { gap: 10px; }
+
+.rk-pgrid__empty { grid-column: 1 / -1; }

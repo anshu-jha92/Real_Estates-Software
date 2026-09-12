@@ -1,0 +1,50 @@
+# Rama Kripa Estates — Render Blueprint
+#
+# One web service runs both halves: the Express API on /api and the built React
+# site on every other path, so there is a single URL and no CORS to configure.
+#
+# First deploy:  Render dashboard -> New -> Blueprint -> pick this repo.
+# Secrets marked `sync: false` are entered once in the dashboard; they are never
+# read from this file, so it is safe to commit.
+
+services:
+  - type: web
+    name: rama-kripa-estates
+    runtime: node
+    plan: free                      # cold-starts after 15 min idle; "starter" removes that
+    region: singapore               # nearest region to Faridabad
+    buildCommand: npm ci --prefix frontend && npm run build --prefix frontend && npm ci --prefix backend --omit=dev
+    startCommand: npm start --prefix backend
+    healthCheckPath: /api/health
+    autoDeploy: true                # every push to the connected branch redeploys
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL           # read at build time; same origin, so just the path
+        value: /api
+      - key: JWT_EXPIRES
+        value: 7d
+      - key: JWT_SECRET
+        generateValue: true         # Render mints a strong random secret on first deploy
+      - key: MONGO_URI
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: rama-kripa
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        value: noreply@ramakripaestate.com
+      # ADMIN_* are only used by `npm run seed`, which you will not run on Render —
+      # the live Atlas database already has your admin user. Left out on purpose.

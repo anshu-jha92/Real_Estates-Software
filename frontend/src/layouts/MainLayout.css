@@ -1,0 +1,14 @@
+.rk-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background: var(--rk-cream);
+}
+
+.rk-layout__main {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+.rk-layout__main:focus { outline: none; }

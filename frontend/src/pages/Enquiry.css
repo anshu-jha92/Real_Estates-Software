@@ -1,0 +1,341 @@
+/* Enquiry page — dedicated lead capture. Mobile-first. */
+
+.rk-enq {
+  background: var(--rk-cream);
+}
+
+.rk-enq__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(22px, 3vw, 36px);
+  align-items: start;
+}
+
+/* ---------- Form card ---------- */
+
+.rk-enq__formCard {
+  gap: 20px;
+  border-radius: var(--rk-r-xl);
+  box-shadow: var(--rk-sh-md);
+}
+
+.rk-enq__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rk-enq__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px 18px;
+}
+
+.rk-enq__wide {
+  grid-column: 1 / -1;
+}
+
+/* Honeypot: off-screen, never focusable. */
+.rk-enq__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.rk-enq__alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--rk-r-md);
+  background: rgba(192, 57, 43, .08);
+  color: var(--rk-danger);
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.rk-enq__alert svg {
+  flex: none;
+  margin-top: 3px;
+  font-size: 1.05rem;
+}
+
+.rk-enq__submit {
+  margin-top: 2px;
+}
+
+.rk-enq__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(8, 37, 27, .3);
+  border-top-color: var(--rk-green-900);
+  border-radius: 50%;
+  flex: none;
+}
+
+.rk-enq__consent {
+  font-size: .82rem;
+  line-height: 1.6;
+  color: var(--rk-muted);
+  text-align: center;
+}
+
+/* ---------- Success state ---------- */
+
+.rk-enq__done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-block: clamp(16px, 3vw, 32px);
+  text-align: center;
+}
+
+.rk-enq__done:focus-visible {
+  outline: 2px solid var(--rk-gold-500);
+  outline-offset: 6px;
+  border-radius: var(--rk-r-lg);
+}
+
+.rk-enq__tick {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--rk-green-50);
+  color: var(--rk-success);
+  font-size: 2.2rem;
+}
+
+.rk-enq__doneTitle {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  color: var(--rk-green-800);
+}
+
+.rk-enq__doneText {
+  font-size: 1.02rem;
+  color: var(--rk-body);
+  max-width: 46ch;
+}
+
+.rk-enq__doneMeta {
+  font-size: .9rem;
+  color: var(--rk-muted);
+  max-width: 50ch;
+}
+
+.rk-enq__doneActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* ---------- Side column ---------- */
+
+.rk-enq__sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2.4vw, 26px);
+}
+
+.rk-enq__sideTitle {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+
+/* Steps timeline */
+
+.rk-enq__steps {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-enq__stepList {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.rk-enq__step {
+  position: relative;
+  display: flex;
+  gap: 16px;
+}
+
+/* Connector line between the numbered discs. */
+.rk-enq__step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 44px;
+  bottom: -22px;
+  left: 21px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--rk-gold-300), rgba(201, 162, 39, .15));
+}
+
+.rk-enq__stepNum {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--rk-green-800);
+  color: var(--rk-gold-300);
+  font-family: var(--rk-font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 0 0 0 4px var(--rk-green-50);
+}
+
+.rk-enq__stepTitle {
+  font-size: 1.05rem;
+  margin-bottom: 5px;
+}
+
+.rk-enq__stepText {
+  font-size: .9rem;
+  line-height: 1.65;
+  color: var(--rk-body);
+}
+
+/* Office card */
+
+.rk-enq__office {
+  padding: clamp(20px, 3vw, 30px);
+  border-radius: var(--rk-r-lg);
+  background:
+    radial-gradient(120% 100% at 100% 0%, rgba(27, 107, 79, .5), transparent 62%),
+    var(--rk-green-800);
+  color: rgba(255, 255, 255, .82);
+  box-shadow: var(--rk-sh-md);
+  border: 1px solid rgba(201, 162, 39, .26);
+}
+
+.rk-enq__officeTitle {
+  font-size: 1.3rem;
+  color: var(--rk-white);
+  margin-bottom: 16px;
+}
+
+.rk-enq__officeList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.rk-enq__officeList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .94rem;
+}
+
+.rk-enq__officeIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--rk-r-sm);
+  background: rgba(201, 162, 39, .16);
+  color: var(--rk-gold-300);
+  font-size: 1.05rem;
+}
+
+.rk-enq__officeList a {
+  color: var(--rk-white);
+  word-break: break-word;
+}
+
+.rk-enq__officeList a:hover,
+.rk-enq__officeList a:focus-visible {
+  color: var(--rk-gold-300);
+}
+
+.rk-enq__officePhones {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Why buy through us */
+
+.rk-enq__why {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-lg);
+  background: var(--rk-white);
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-enq__whyList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.rk-enq__whyItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.rk-enq__whyIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--rk-r-sm);
+  background: var(--rk-gold-50);
+  color: var(--rk-gold-600);
+  font-size: 1.05rem;
+}
+
+.rk-enq__whyBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: .88rem;
+  line-height: 1.6;
+  color: var(--rk-body);
+}
+
+.rk-enq__whyBody strong {
+  font-size: .95rem;
+  color: var(--rk-green-800);
+}
+
+.rk-enq__whyLink {
+  min-height: 44px;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 560px) {
+  .rk-enq__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .rk-enq__row {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+
+  .rk-enq__sideCol {
+    position: sticky;
+    top: calc(var(--rk-header-h) + 20px);
+  }
+}

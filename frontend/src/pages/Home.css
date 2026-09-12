@@ -1,0 +1,20 @@
+/* Home page shell. Each section styles itself; this file only owns the
+   page-level rhythm and the in-page anchor offsets. */
+
+.rk-home {
+  background: var(--rk-cream);
+  overflow-x: clip;
+}
+
+/* Sticky header must not cover a section jumped to from the nav. */
+.rk-home [id] {
+  scroll-margin-top: calc(var(--rk-header-h) + 16px);
+}
+
+/* The category strip rides over the bottom edge of the hero on desktop,
+   so the section that follows needs a little breathing room back. */
+@media (min-width: 1024px) {
+  .rk-home .rk-catstrip + * {
+    padding-top: clamp(24px, 3vw, 48px);
+  }
+}

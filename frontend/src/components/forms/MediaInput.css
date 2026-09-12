@@ -1,0 +1,174 @@
+.rk-media { display: grid; gap: 8px; }
+
+.rk-media .rk-label em { color: var(--rk-danger); font-style: normal; }
+
+.rk-media__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.rk-media__main { flex: 1 1 auto; min-width: 0; display: grid; gap: 8px; }
+
+/* ---------- Preview ---------- */
+
+.rk-media__preview {
+  flex: none;
+  object-fit: cover;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-surface);
+}
+
+.rk-media__preview--wide { width: 132px; aspect-ratio: 16 / 10; }
+.rk-media__preview--square { width: 76px; aspect-ratio: 1; }
+
+/* ---------- Drop zone ---------- */
+
+.rk-media__drop {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1.5px dashed var(--rk-gold-400);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-gold-50);
+  transition: background var(--rk-t), border-color var(--rk-t);
+}
+
+.rk-media__drop.is-dragging {
+  border-color: var(--rk-green-600);
+  background: var(--rk-green-50);
+}
+
+.rk-media__drop.is-busy { border-style: solid; }
+
+/* Visually hidden but still focusable, so the label acts as the button. */
+.rk-media__file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.rk-media__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 24px;
+  color: var(--rk-green-800);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rk-media__cta svg { font-size: 1.35rem; color: var(--rk-gold-600); flex: none; }
+
+.rk-media__file:focus-visible + .rk-media__cta {
+  outline: 2px solid var(--rk-gold-500);
+  outline-offset: 3px;
+  border-radius: var(--rk-r-sm);
+}
+
+.rk-media__bar {
+  flex: 1 1 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: var(--rk-r-pill);
+  background: rgba(201, 162, 39, .25);
+}
+
+.rk-media__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--rk-gold-400), var(--rk-gold-600));
+  transition: width .2s linear;
+}
+
+.rk-media__cancel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  color: var(--rk-muted);
+  font-size: .78rem;
+  cursor: pointer;
+}
+
+.rk-media__cancel:hover { color: var(--rk-danger); }
+
+/* ---------- URL box ---------- */
+
+.rk-media__url {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rk-media__url > svg { flex: none; color: var(--rk-muted); font-size: 1.1rem; }
+.rk-media__url .rk-input { flex: 1 1 auto; min-width: 0; }
+
+.rk-media__clear {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-sm);
+  background: var(--rk-white);
+  color: var(--rk-muted);
+  cursor: pointer;
+}
+
+.rk-media__clear:hover { border-color: var(--rk-danger); color: var(--rk-danger); }
+
+/* ---------- Messages ---------- */
+
+.rk-media__hint,
+.rk-media__note,
+.rk-media__error,
+.rk-media__ok {
+  margin: 0;
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+.rk-media__hint { color: var(--rk-muted); }
+.rk-media__note { color: var(--rk-muted); }
+.rk-media__note code { font-size: .74rem; }
+.rk-media__error { color: var(--rk-danger); font-weight: 600; }
+
+.rk-media__ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--rk-success);
+  font-weight: 600;
+}
+
+/* ---------- Compact variant (repeated rows) ---------- */
+
+.rk-media--compact .rk-media__drop { padding: 9px 12px; }
+.rk-media--compact .rk-media__cta { font-size: .82rem; }
+.rk-media--compact .rk-media__row { gap: 10px; }
+
+@media (max-width: 620px) {
+  .rk-media__row { flex-direction: column; }
+  .rk-media__preview--wide { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-media__drop,
+  .rk-media__bar-fill { transition: none; }
+}

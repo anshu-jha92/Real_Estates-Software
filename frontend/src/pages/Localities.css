@@ -1,0 +1,190 @@
+/* Faridabad localities index. Mobile-first. */
+
+.rk-localities {
+  background: var(--rk-cream);
+}
+
+/* ---------- Intro ---------- */
+
+.rk-localities__intro {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.4vw, 40px);
+  align-items: start;
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.rk-localities__introCopy p {
+  font-size: 1rem;
+  line-height: 1.78;
+  color: var(--rk-body);
+  max-width: 68ch;
+}
+
+.rk-localities__introCopy p + p {
+  margin-top: 14px;
+}
+
+/* ---------- Grid ---------- */
+
+.rk-localities__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(18px, 2.4vw, 30px);
+}
+
+.rk-localities__card {
+  height: 100%;
+}
+
+.rk-localities__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: var(--rk-surface);
+}
+
+.rk-localities__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s var(--rk-ease);
+}
+
+.rk-localities__card:hover .rk-localities__media img,
+.rk-localities__card:focus-within .rk-localities__media img {
+  transform: scale(1.07);
+}
+
+.rk-localities__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 37, 27, 0) 45%, rgba(8, 37, 27, .62) 100%);
+  pointer-events: none;
+}
+
+.rk-localities__count {
+  position: absolute;
+  z-index: 1;
+  left: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: var(--rk-r-pill);
+  background: rgba(250, 247, 241, .94);
+  color: var(--rk-green-800);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  box-shadow: var(--rk-sh-sm);
+}
+
+.rk-localities__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  padding: clamp(18px, 2.4vw, 24px);
+}
+
+.rk-localities__name {
+  font-size: 1.25rem;
+}
+
+.rk-localities__name a {
+  color: var(--rk-ink);
+}
+
+.rk-localities__name a:hover,
+.rk-localities__name a:focus-visible {
+  color: var(--rk-gold-600);
+}
+
+.rk-localities__desc {
+  font-size: .92rem;
+  line-height: 1.7;
+  color: var(--rk-body);
+}
+
+.rk-localities__price {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: auto;
+  padding: 11px 14px;
+  border-radius: var(--rk-r-sm);
+  background: var(--rk-gold-50);
+  color: var(--rk-gold-600);
+  font-size: .86rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.rk-localities__price svg {
+  flex: none;
+  margin-top: 2px;
+  font-size: 1.05rem;
+}
+
+.rk-localities__cta {
+  min-height: 44px;
+  align-items: center;
+  align-self: flex-start;
+}
+
+.rk-localities__cta svg {
+  transition: transform var(--rk-t);
+}
+
+.rk-localities__cta:hover svg,
+.rk-localities__cta:focus-visible svg {
+  transform: translateX(4px);
+}
+
+/* ---------- Map ---------- */
+
+.rk-localities__mapHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+.rk-localities__mapCta {
+  flex: none;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (min-width: 768px) {
+  .rk-localities__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .rk-localities__intro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  }
+}
+
+@media (min-width: 1080px) {
+  .rk-localities__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-localities__card:hover .rk-localities__media img,
+  .rk-localities__cta:hover svg,
+  .rk-localities__cta:focus-visible svg {
+    transform: none;
+  }
+}

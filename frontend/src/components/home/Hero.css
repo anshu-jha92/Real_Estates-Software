@@ -1,0 +1,284 @@
+/* Rama Kripa Estates — home hero */
+
+/* The hero deliberately creates NO stacking context — no `isolation: isolate`
+   and no numeric z-index, here or on .rk-hero__inner. Either one would trap the
+   search dropdown inside this section, where it loses to the sticky header
+   (z-index 50) and the category strip (z-index 2).
+   Layering instead relies on tree order at stacking level 0:
+     bg → overlay → glow → inner (last, so it paints on top).
+   That keeps the hero's background BELOW the category cards that overlap it,
+   while the dropdown's z-index 60 reaches the root and clears everything. */
+.rk-hero {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 620px;
+  min-height: max(620px, min(100svh, 900px));
+  background: var(--rk-green-900);
+  color: var(--rk-white);
+}
+
+/* ---------- Slideshow ---------- */
+
+.rk-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.rk-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s var(--rk-ease);
+}
+
+.rk-hero__slide.is-active { opacity: 1; }
+
+.rk-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  transform: scale(1.04);
+}
+
+/* Ken-Burns runs on whichever slide is showing, so the movement never stops. */
+.rk-hero__slide.is-active .rk-hero__img {
+  animation: rkKenBurns 9s linear both;
+}
+
+.rk-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(rgba(8, 37, 27, .72), rgba(8, 37, 27, .45) 50%, rgba(8, 37, 27, .85));
+}
+
+.rk-hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(60% 55% at 78% 18%, rgba(223, 190, 90, .22), transparent 70%),
+    radial-gradient(70% 60% at 8% 88%, rgba(27, 107, 79, .35), transparent 72%);
+  pointer-events: none;
+}
+
+/* ---------- Content ---------- */
+
+.rk-hero__inner {
+  /* `position: relative` with z-index AUTO on purpose. A numeric z-index here
+     would create a stacking context and trap the search dropdown inside the
+     hero. Being the last positioned child at stacking level 0, this paints
+     above the bg/overlay/glow by tree order alone. */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(16px, 2.4vh, 26px);
+  width: 100%;
+  padding-block: clamp(52px, 8vh, 92px);
+}
+
+.rk-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: var(--rk-gold-300);
+  font-size: clamp(.68rem, 2.2vw, .78rem);
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.rk-hero__eyebrow-rule {
+  flex: none;
+  width: clamp(28px, 7vw, 52px);
+  height: 2px;
+  border-radius: var(--rk-r-pill);
+  background: linear-gradient(90deg, var(--rk-gold-600), var(--rk-gold-300));
+}
+
+.rk-hero__title {
+  margin: 0;
+  max-width: 18ch;
+  font-family: var(--rk-font-display);
+  font-size: clamp(2.05rem, 6.4vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -.01em;
+  color: var(--rk-white);
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgba(8, 37, 27, .45);
+}
+
+/* Fixed-width stack: every word occupies the same grid cell, so the line
+   below the headline never jumps as the word swaps. */
+.rk-hero__rotator {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.rk-hero__words {
+  display: inline-grid;
+  overflow: hidden;
+  padding-block: .06em;
+  vertical-align: bottom;
+}
+
+.rk-hero__word {
+  grid-area: 1 / 1;
+  color: var(--rk-gold-400);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity .5s var(--rk-ease), transform .5s var(--rk-ease);
+}
+
+.rk-hero__word.is-active { opacity: 1; transform: translateY(0); }
+.rk-hero__word.is-leaving { opacity: 0; transform: translateY(-100%); }
+
+.rk-hero__sub {
+  margin: 0;
+  max-width: 60ch;
+  color: rgba(255, 255, 255, .86);
+  font-size: clamp(.95rem, 2.6vw, 1.09rem);
+  line-height: 1.68;
+}
+
+/* ---------- Trust pills ---------- */
+
+.rk-hero__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rk-hero__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px;
+  border: 1px solid rgba(235, 215, 154, .34);
+  border-radius: var(--rk-r-pill);
+  background: rgba(8, 37, 27, .42);
+  color: var(--rk-white);
+  font-size: clamp(.74rem, 2.3vw, .84rem);
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
+.rk-hero__pill-icon {
+  flex: none;
+  font-size: 1.06rem;
+  color: var(--rk-gold-400);
+}
+
+/* ---------- Dots + scroll cue ---------- */
+
+.rk-hero__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: clamp(10px, 3vh, 30px);
+}
+
+.rk-hero__dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rk-hero__dot {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.rk-hero__dot-fill {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--rk-r-pill);
+  background: rgba(255, 255, 255, .42);
+  transition: width var(--rk-t), background var(--rk-t);
+}
+
+.rk-hero__dot:hover .rk-hero__dot-fill { background: var(--rk-gold-300); }
+
+.rk-hero__dot.is-active .rk-hero__dot-fill {
+  width: 32px;
+  background: linear-gradient(90deg, var(--rk-gold-400), var(--rk-gold-600));
+}
+
+.rk-hero__dot:focus-visible {
+  outline: 2px solid var(--rk-gold-400);
+  outline-offset: 2px;
+  border-radius: var(--rk-r-pill);
+}
+
+.rk-hero__cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 6px 4px;
+  color: rgba(255, 255, 255, .82);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--rk-t);
+}
+
+.rk-hero__cue:hover,
+.rk-hero__cue:focus-visible { color: var(--rk-gold-300); }
+
+.rk-hero__cue-arrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(235, 215, 154, .45);
+  border-radius: var(--rk-r-pill);
+  font-size: 1.3rem;
+  color: var(--rk-gold-300);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .rk-hero { min-height: max(620px, 100svh); }
+  .rk-hero__title { max-width: none; }
+  .rk-hero__cue-text { display: none; }
+  .rk-hero__foot { justify-content: space-between; }
+}
+
+@media (min-width: 1024px) {
+  .rk-hero__inner { gap: clamp(20px, 2.6vh, 30px); }
+  .rk-hero__sub { font-size: 1.12rem; }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-hero__slide.is-active .rk-hero__img { animation: none; transform: scale(1.04); }
+  .rk-hero__slide { transition: none; }
+  .rk-hero__word { transition: none; }
+  .rk-hero__word.is-leaving { display: none; }
+  .rk-hero__dot-fill { transition: none; }
+}

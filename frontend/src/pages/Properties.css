@@ -1,0 +1,176 @@
+/* Properties listing — sticky filter rail + results column (BUILD_SPEC §7).
+   Mobile-first: one column with the FilterBar bottom-sheet, becoming a
+   300px rail + results grid from 1024px up. */
+
+.rk-props {
+  background: var(--rk-cream);
+}
+
+.rk-props__section {
+  padding-block: clamp(28px, 5vw, 64px);
+}
+
+.rk-props__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 32px);
+  align-items: start;
+}
+
+/* The desktop rail is hidden below 1024px — FilterBar reuses the same
+   FilterSidebar inside its bottom sheet, so nothing is lost. */
+.rk-props__side {
+  display: none;
+}
+
+.rk-props__results {
+  min-width: 0;
+  scroll-margin-top: calc(var(--rk-header-h) + 16px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile filter bar                                                   */
+/* ------------------------------------------------------------------ */
+
+.rk-props__mobilebar {
+  margin-bottom: 18px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Result count + sort                                                 */
+/* ------------------------------------------------------------------ */
+
+.rk-props__head {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--rk-line);
+}
+
+.rk-props__count {
+  margin: 0;
+  min-width: 0;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--rk-ink);
+}
+
+.rk-props__sort {
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Active filter chips (desktop copy; FilterBar owns the mobile one)   */
+/* ------------------------------------------------------------------ */
+
+.rk-props__chips {
+  display: none;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.rk-props__chipslabel {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--rk-muted);
+}
+
+.rk-props__chiplist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rk-props__clear {
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: var(--rk-r-pill);
+  background: transparent;
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--rk-gold-600);
+  cursor: pointer;
+  transition: color var(--rk-t), background var(--rk-t);
+}
+
+.rk-props__clear:hover {
+  background: var(--rk-gold-50);
+  color: var(--rk-green-800);
+}
+
+.rk-props__clear:focus-visible {
+  outline: 2px solid var(--rk-gold-500);
+  outline-offset: 3px;
+  border-radius: var(--rk-r-sm);
+}
+
+/* ------------------------------------------------------------------ */
+/* Pagination + closing note                                           */
+/* ------------------------------------------------------------------ */
+
+.rk-props__pagination {
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.rk-props__foot {
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--rk-line);
+  font-size: .9rem;
+  line-height: 1.7;
+  color: var(--rk-body);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ */
+/* >= 768px — the header row can sit on one line                        */
+/* ------------------------------------------------------------------ */
+
+@media (min-width: 768px) {
+  .rk-props__foot {
+    text-align: left;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* >= 1024px — rail + results, mobile bar retires                       */
+/* ------------------------------------------------------------------ */
+
+@media (min-width: 1024px) {
+  .rk-props__body {
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: clamp(24px, 2.4vw, 36px);
+  }
+
+  .rk-props__side {
+    display: block;
+  }
+
+  .rk-props__mobilebar {
+    display: none;
+  }
+
+  .rk-props__head,
+  .rk-props__chips {
+    display: flex;
+  }
+}
+
+@media (min-width: 1280px) {
+  .rk-props__body {
+    grid-template-columns: 320px minmax(0, 1fr);
+  }
+}

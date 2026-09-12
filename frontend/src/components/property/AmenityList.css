@@ -1,0 +1,94 @@
+/* Rama Kripa Estates — AmenityList */
+
+.rk-amen { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+
+.rk-amen__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+  gap: 10px;
+  list-style: none;
+}
+
+.rk-amen__item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 14px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-white);
+  transition: border-color var(--rk-t), box-shadow var(--rk-t), transform var(--rk-t);
+}
+
+.rk-amen__item:hover {
+  border-color: rgba(201, 162, 39, .5);
+  box-shadow: var(--rk-sh-sm);
+  transform: translateY(-2px);
+}
+
+.rk-amen__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--rk-green-50);
+  color: var(--rk-green-700);
+  font-size: 1.15rem;
+}
+
+.rk-amen__item:hover .rk-amen__icon { background: var(--rk-gold-50); color: var(--rk-gold-600); }
+
+.rk-amen__label {
+  font-size: .86rem;
+  font-weight: 600;
+  color: var(--rk-body);
+  line-height: 1.35;
+}
+
+.rk-amen__toggle {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-pill);
+  background: var(--rk-white);
+  color: var(--rk-green-800);
+  font-size: .84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color var(--rk-t), color var(--rk-t), background var(--rk-t);
+}
+
+.rk-amen__toggle:hover { border-color: var(--rk-gold-500); background: var(--rk-gold-50); color: var(--rk-gold-600); }
+.rk-amen__toggle svg { transition: transform var(--rk-t); }
+.rk-amen__toggle[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+.rk-amen__none {
+  font-size: .92rem;
+  color: var(--rk-body);
+  line-height: 1.7;
+  padding: 16px 18px;
+  border: 1px dashed var(--rk-line);
+  border-radius: var(--rk-r-md);
+  background: var(--rk-cream);
+}
+
+@media (max-width: 480px) {
+  .rk-amen__grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)); gap: 8px; }
+  .rk-amen__item { padding: 10px 12px; gap: 9px; }
+  .rk-amen__icon { width: 34px; height: 34px; font-size: 1rem; }
+  .rk-amen__label { font-size: .8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-amen__item,
+  .rk-amen__toggle,
+  .rk-amen__toggle svg { transition: none; }
+  .rk-amen__item:hover { transform: none; }
+  .rk-amen__toggle[aria-expanded='true'] svg { transform: none; }
+}

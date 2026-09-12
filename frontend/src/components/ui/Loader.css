@@ -1,0 +1,53 @@
+.rk-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.rk-loader--full {
+  min-height: 62vh;
+  min-height: 62svh;
+}
+
+.rk-loader__ring {
+  position: relative;
+  display: block;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 3px solid var(--rk-line);
+  border-top-color: var(--rk-gold-500);
+  border-right-color: var(--rk-gold-400);
+  animation: rkSpin 1s linear infinite;
+}
+
+.rk-loader--sm .rk-loader__ring { width: 26px; height: 26px; border-width: 2.5px; }
+.rk-loader--lg .rk-loader__ring { width: 62px; height: 62px; border-width: 4px; }
+
+.rk-loader__dot {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rk-green-700);
+}
+
+.rk-loader__label {
+  font-size: .88rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--rk-muted);
+}
+
+.rk-loader--sm { padding: 18px 10px; gap: 10px; }
+.rk-loader--sm .rk-loader__label { font-size: .8rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-loader__ring { animation: none; border-top-color: var(--rk-gold-500); }
+}

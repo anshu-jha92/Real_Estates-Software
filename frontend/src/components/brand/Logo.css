@@ -1,0 +1,91 @@
+.rk-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  line-height: 1.1;
+}
+
+.rk-logo:hover { color: inherit; }
+
+.rk-logomark {
+  flex: none;
+  /* base.css tints every <img> while it loads; on a transparent badge that tint
+     survives as a square plate behind the circle. */
+  background: none;
+  transition: transform var(--rk-t);
+}
+
+.rk-logo:hover .rk-logomark,
+.rk-logo:focus-visible .rk-logomark { transform: translateY(-2px) scale(1.04); }
+
+.rk-logo__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rk-logo__name {
+  font-family: var(--rk-font-display);
+  font-size: clamp(1.05rem, .95rem + .45vw, 1.32rem);
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: var(--rk-brand-black);
+  white-space: nowrap;
+}
+
+.rk-logo__sub {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.rk-logo__rule {
+  flex: 1 1 auto;
+  min-width: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(232, 38, 44, 0), var(--rk-brand-red), rgba(232, 38, 44, 0));
+}
+
+.rk-logo__estate {
+  font-family: var(--rk-font-body);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: var(--rk-brand-red);
+  white-space: nowrap;
+}
+
+.rk-logo__tagline {
+  font-family: var(--rk-font-display);
+  font-style: italic;
+  font-size: .74rem;
+  color: var(--rk-muted);
+  white-space: nowrap;
+}
+
+/* Light lockup for dark green bands */
+.rk-logo--light .rk-logo__name { color: var(--rk-white); }
+.rk-logo--light .rk-logo__estate { color: var(--rk-brand-red-300); }
+.rk-logo--light .rk-logo__tagline { color: rgba(255, 255, 255, .7); }
+.rk-logo--light .rk-logo__rule {
+  background: linear-gradient(90deg, rgba(255, 128, 120, 0), var(--rk-brand-red-300), rgba(255, 128, 120, 0));
+}
+
+@media (max-width: 600px) {
+  .rk-logo { gap: 9px; }
+  .rk-logo__tagline { display: none; }
+}
+
+@media (max-width: 380px) {
+  /* Keep "Estates" — it is part of the company name. Drop only the rules. */
+  .rk-logo__rule { display: none; }
+  .rk-logo__estate { letter-spacing: .3em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-logo:hover .rk-logomark,
+  .rk-logo:focus-visible .rk-logomark { transform: none; }
+}
