@@ -6,9 +6,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "npm ci --prefix frontend && npm run build --prefix frontend && npm ci --prefix backend --omit=dev",
-    "start": "npm start --prefix backend",
-    "dev:frontend": "npm run dev --prefix frontend",
-    "dev:backend": "npm run dev --prefix backend"
+    "build": "node --version && npm --version && cd frontend && npm ci && npm run build && cd ../backend && npm ci --omit=dev",
+    "start": "cd backend && npm start",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev"
   }
 }
