@@ -1,0 +1,14 @@
+{
+  "name": "rama-kripa-estates",
+  "private": true,
+  "description": "Rama Kripa Estates - Faridabad real-estate site. Express API + React frontend, deployed as one service.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm ci --prefix frontend && npm run build --prefix frontend && npm ci --prefix backend --omit=dev",
+    "start": "npm start --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend"
+  }
+}

@@ -13,8 +13,8 @@ services:
     runtime: node
     plan: free                      # cold-starts after 15 min idle; "starter" removes that
     region: singapore               # nearest region to Faridabad
-    buildCommand: npm ci --prefix frontend && npm run build --prefix frontend && npm ci --prefix backend --omit=dev
-    startCommand: npm start --prefix backend
+    buildCommand: npm run build     # see scripts in the root package.json
+    startCommand: npm start
     healthCheckPath: /api/health
     autoDeploy: true                # every push to the connected branch redeploys
     envVars:
