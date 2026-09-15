@@ -1,47 +1,22 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import { MdCheck, MdExpandMore } from 'react-icons/md'
+import { MdCheck, MdExpandMore, MdSearch } from 'react-icons/md'
 import './SearchSelect.css'
 
 /**
- * "sec 8" -> ["sec", "8"];  "1bhk" -> ["1", "bhk"];  "₹50,000" -> ["50", "000"].
- * Splits on anything that is not a letter or digit, and between letters and
- * digits, so what people type and what the labels say break up the same way.
- */
-const words = (text) =>
-  String(text || '')
-    .toLowerCase()
-    .replace(/([a-z])(\d)|(\d)([a-z])/g, '$1$3 $2$4')
-    .split(/[^a-z0-9]+/)
-    .filter(Boolean)
-
-/**
- * Every typed word must START some word of the label. So "50" matches
- * "₹50,000" and "₹50 Lac" but not "₹5,000" or "₹25,000"; "sec 8" matches
- * "Sector 84" but not "Sector 12". Prefix-on-words is what people expect
- * from an autocomplete — plain substring matching was reading "50" into
- * "5,000" and looked broken.
- */
-const matches = (label, typed) => {
-  const needles = words(typed)
-  if (!needles.length) return true
-  const hay = words(label)
-  return needles.every((n) => hay.some((w) => w.startsWith(n)))
-}
-
-/**
- * A select you type into. The field itself is the text box: click it, type,
- * the list underneath narrows, pick a row and its label sits in the field.
- * Leaving without picking puts the previous choice back.
+ * A select you can type into. Closed it looks like a normal field; open it shows a
+ * filter box above the option list, so a long ladder of prices or 23 Faridabad
+ * localities stays usable.
  *
  * Values are compared as strings because form state keeps everything as strings.
  */
 export default function SearchSelect({
-  id: inputId,
+  id: triggerId,
   value = '',
   onChange,
   options = [],
   placeholder = 'Select',
   clearLabel = 'Any',
+  searchPlaceholder = 'Type to search…',
   ariaLabel,
   variant = 'glass',
   name,
@@ -49,17 +24,17 @@ export default function SearchSelect({
 }) {
   const reactId = useId()
   const id = `rk-ss-${reactId.replace(/[:]/g, '')}`
-  const listId = `${id}-list`
 
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const [typed, setTyped] = useState(false) // true once the visitor edits the text
-  const [active, setActive] = useState(-1)
+  const [active, setActive] = useState(0)
   const [dropUp, setDropUp] = useState(false)
 
   const rootRef = useRef(null)
   const inputRef = useRef(null)
+  const triggerRef = useRef(null)
   const listRef = useRef(null)
+  /** True while the highlight is being moved by the keyboard, false when the mouse moves it. */
   const viaKeyboardRef = useRef(false)
 
   // `clearLabel` is option 0 so "Any" is always reachable by keyboard.
@@ -68,60 +43,55 @@ export default function SearchSelect({
     [options, clearLabel]
   )
 
-  const selected = allOptions.find((o) => o.value === String(value ?? ''))
-  const selectedLabel = selected && selected.value ? selected.label : ''
-
-  // Until the visitor types, the whole list shows — opening the field must not
-  // hide everything but the current choice.
   const shown = useMemo(() => {
-    if (!typed) return allOptions
-    return allOptions.filter((o) => !o.value || matches(o.label, query))
-  }, [allOptions, query, typed])
+    // Every typed word must appear somewhere in the label, so "sec 8" finds
+    // "Sector 84" and "3 bhk" finds "3 BHK Apartment". Punctuation is ignored
+    // on both sides so digits typed into a price box match "Rs.5,00,000" too.
+    const tokens = query.toLowerCase().split(/\s+/).map((t) => t.replace(/[^a-z0-9]/g, '')).filter(Boolean)
+    if (!tokens.length) return allOptions
+    return allOptions.filter((o) => {
+      if (!o.value) return true // keep the "Any" row reachable
+      const bare = o.label.toLowerCase().replace(/[^a-z0-9]/g, '')
+      return tokens.every((t) => bare.includes(t))
+    })
+  }, [allOptions, query])
 
-  const realMatches = shown.filter((o) => o.value)
-  const nothingMatches = typed && query.trim() && realMatches.length === 0
+  const selected = allOptions.find((o) => o.value === String(value ?? ''))
 
-  function openList() {
-    if (disabled || open) return
-    setOpen(true)
-    setTyped(false)
-    setQuery(selectedLabel)
-    setActive(-1)
-  }
-
-  function closeList() {
+  function close(refocus = true) {
     setOpen(false)
-    setTyped(false)
-    setActive(-1)
+    setQuery('')
+    // preventScroll: refocusing the trigger must not yank the page around.
+    if (refocus) triggerRef.current?.focus({ preventScroll: true })
   }
 
   function pick(option) {
     onChange?.(option.value)
-    closeList()
-    inputRef.current?.blur()
+    close()
   }
 
   // Panel height cap from the stylesheet; keep the two in step.
   const PANEL_H = 268
 
+  // Open with the current selection highlighted, and focus the filter box.
   useEffect(() => {
     if (!open) return
-    const box = inputRef.current?.getBoundingClientRect()
+    const box = triggerRef.current?.getBoundingClientRect()
     if (box) {
       const below = window.innerHeight - box.bottom
+      // Flip up only when there is genuinely more room the other way.
       setDropUp(below < PANEL_H + 16 && box.top > below)
     }
-    // Show the current choice highlighted, and select the text so typing replaces it.
-    const idx = allOptions.findIndex((o) => o.value === String(value ?? ''))
-    setActive(idx > 0 ? idx : -1)
-    inputRef.current?.select()
+    viaKeyboardRef.current = true
+    setActive(Math.max(0, shown.findIndex((o) => o.value === String(value ?? ''))))
+    inputRef.current?.focus({ preventScroll: true })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
   useEffect(() => {
     if (!open) return undefined
     const onPointerDown = (event) => {
-      if (!rootRef.current?.contains(event.target)) closeList()
+      if (!rootRef.current?.contains(event.target)) close(false)
     }
     document.addEventListener('mousedown', onPointerDown)
     document.addEventListener('touchstart', onPointerDown)
@@ -131,9 +101,11 @@ export default function SearchSelect({
     }
   }, [open])
 
-  // Keep the keyboard-highlighted row inside the list — the list only, never the page.
+  // Keep the keyboard-highlighted row inside the list. This scrolls ONLY the
+  // list: scrollIntoView would also scroll every ancestor, including the page,
+  // and it fired on every mouse hover — which is what made the hero jump.
   useEffect(() => {
-    if (!open || active < 0 || !viaKeyboardRef.current) return
+    if (!open || !viaKeyboardRef.current) return
     const list = listRef.current
     const row = list?.querySelector('[data-active="true"]')
     if (!list || !row) return
@@ -146,45 +118,32 @@ export default function SearchSelect({
   function onKeyDown(event) {
     if (event.key === 'Escape') {
       event.preventDefault()
-      closeList()
-      return
-    }
-    if (event.key === 'Tab') {
-      closeList()
+      close()
       return
     }
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault()
-      if (!open) {
-        openList()
-        return
-      }
       if (!shown.length) return
-      viaKeyboardRef.current = true
       const step = event.key === 'ArrowDown' ? 1 : -1
-      setActive((i) => {
-        if (i < 0) return step > 0 ? 0 : shown.length - 1
-        return (i + step + shown.length) % shown.length
-      })
+      viaKeyboardRef.current = true
+      setActive((i) => (i + step + shown.length) % shown.length)
       return
     }
     if (event.key === 'Home' || event.key === 'End') {
-      if (!open) return
       event.preventDefault()
       viaKeyboardRef.current = true
       setActive(event.key === 'Home' ? 0 : shown.length - 1)
       return
     }
     if (event.key === 'Enter') {
-      if (!open) return
       event.preventDefault()
-      if (active >= 0 && shown[active]) pick(shown[active])
-      // Typed something that narrows to exactly one real option — take it.
-      else if (typed && realMatches.length === 1) pick(realMatches[0])
+      if (shown[active]) pick(shown[active])
+      return
     }
+    if (event.key === 'Tab') close(false)
   }
 
-  const displayValue = open ? query : selectedLabel
+  const listId = `${id}-list`
 
   return (
     <div
@@ -195,60 +154,57 @@ export default function SearchSelect({
     >
       {name && <input type="hidden" name={name} value={value ?? ''} />}
 
-      <div className="rk-ss__field">
-        <input
-          ref={inputRef}
-          id={inputId}
-          type="text"
-          role="combobox"
-          className="rk-ss__input"
-          value={displayValue}
-          placeholder={placeholder}
-          aria-label={ariaLabel}
-          aria-autocomplete="list"
-          aria-expanded={open}
-          aria-controls={open ? listId : undefined}
-          aria-activedescendant={open && active >= 0 ? `${id}-opt-${active}` : undefined}
-          autoComplete="off"
-          disabled={disabled}
-          onFocus={openList}
-          onClick={openList}
-          onChange={(event) => {
-            setQuery(event.target.value)
-            setTyped(true)
-            setActive(-1)
-            if (!open) setOpen(true)
-          }}
-          onKeyDown={onKeyDown}
-        />
-        <button
-          type="button"
-          className="rk-ss__caret"
-          tabIndex={-1}
-          aria-label={open ? 'Close list' : 'Open list'}
-          disabled={disabled}
-          // mousedown, not click: keeps the input focused so the list does not flicker shut
-          onMouseDown={(event) => {
+      <button
+        ref={triggerRef}
+        id={triggerId}
+        type="button"
+        className="rk-ss__trigger"
+        aria-label={ariaLabel}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={open ? listId : undefined}
+        disabled={disabled}
+        onClick={() => setOpen((wasOpen) => !wasOpen)}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
             event.preventDefault()
-            if (open) closeList()
-            else {
-              inputRef.current?.focus()
-              openList()
-            }
-          }}
-        >
-          <MdExpandMore aria-hidden="true" />
-        </button>
-      </div>
+            setOpen(true)
+          }
+        }}
+      >
+        <span className={`rk-ss__value${selected && selected.value ? '' : ' is-placeholder'}`}>
+          {selected && selected.value ? selected.label : placeholder}
+        </span>
+        <MdExpandMore className="rk-ss__caret" aria-hidden="true" />
+      </button>
 
       {open && (
         <div className="rk-ss__panel">
+          <div className="rk-ss__search">
+            <MdSearch aria-hidden="true" />
+            <input
+              ref={inputRef}
+              type="text"
+              role="combobox"
+              className="rk-ss__input"
+              value={query}
+              placeholder={searchPlaceholder}
+              aria-label={ariaLabel ? `Filter ${ariaLabel}` : 'Filter options'}
+              aria-expanded="true"
+              aria-controls={listId}
+              aria-autocomplete="list"
+              aria-activedescendant={shown[active] ? `${id}-opt-${active}` : undefined}
+              autoComplete="off"
+              onChange={(event) => {
+                setQuery(event.target.value)
+                setActive(0)
+              }}
+              onKeyDown={onKeyDown}
+            />
+          </div>
+
           <ul ref={listRef} id={listId} role="listbox" className="rk-ss__list" aria-label={ariaLabel}>
-            {nothingMatches && (
-              <li className="rk-ss__empty">
-                No match for “{query.trim()}” — try fewer letters
-              </li>
-            )}
+            {shown.length === 0 && <li className="rk-ss__empty">No match for “{query}”</li>}
 
             {shown.map((option, index) => {
               const isSelected = option.value === String(value ?? '')
@@ -266,7 +222,7 @@ export default function SearchSelect({
                     viaKeyboardRef.current = false
                     setActive(index)
                   }}
-                  // mousedown fires before the input blurs and the panel closes
+                  // mousedown fires before the outside-click handler can close the panel
                   onMouseDown={(event) => {
                     event.preventDefault()
                     pick(option)
