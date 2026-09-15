@@ -38,11 +38,22 @@ function getMailer() {
   }
 
   const port = parseInt(SMTP_PORT || '587', 10);
+  // An enquiry sends two mails back to back, and Mailtrap's free sandbox takes
+  // only 1 mail per 10 s (the rest bounce with "550 Too many emails per
+  // second"). So: one connection, messages queued one per window. The window
+  // is counted from when a send *starts*, hence the margin over 10 s. Live
+  // providers (Gmail, Brevo, Mailtrap Sending) only cap per hour/day, so
+  // there the window is a harmless second.
+  const sandbox = /sandbox/i.test(SMTP_HOST);
   mailer = nodemailer.createTransport({
     host: SMTP_HOST,
     port,
     secure: port === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    pool: true,
+    maxConnections: 1,
+    rateLimit: 1,
+    rateDelta: sandbox ? 15_000 : 1_000,
   });
 
   return mailer;
