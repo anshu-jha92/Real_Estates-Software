@@ -7,6 +7,7 @@ import {
   MdErrorOutline,
   MdMarkEmailUnread,
   MdMailOutline,
+  MdReply,
   MdSearch,
   MdWhatsapp
 } from 'react-icons/md'
@@ -94,6 +95,10 @@ export default function AdminEnquiries() {
   const [busyId, setBusyId] = useState('')
   const [pendingDelete, setPendingDelete] = useState(null)
   const [deleting, setDeleting] = useState(false)
+  const [replyTo, setReplyTo] = useState(null) // enquiry being answered
+  const [replyText, setReplyText] = useState('')
+  const [replyError, setReplyError] = useState('')
+  const [sending, setSending] = useState(false)
   const [exporting, setExporting] = useState(false)
 
   const noteDraft = useRef({})
@@ -166,6 +171,39 @@ export default function AdminEnquiries() {
       toast.error('Could not save', err.message || 'Please try again.')
     } finally {
       setBusyId('')
+    }
+  }
+
+  const openReply = (row) => {
+    setReplyTo(row)
+    setReplyText('')
+    setReplyError('')
+  }
+
+  const sendReply = async (event) => {
+    event.preventDefault()
+    const text = replyText.trim()
+    if (!text) {
+      setReplyError('Write a reply first.')
+      return
+    }
+    setSending(true)
+    setReplyError('')
+    try {
+      const res = await api.admin.replyToEnquiry(replyTo._id, { message: text }, getToken())
+      const updated = res.data
+      // Reflect the server's copy: the new reply in the history, status moved to Contacted.
+      setRows((list) => list.map((r) => (r._id === updated._id ? { ...r, ...updated } : r)))
+      if (replyTo.status === 'new' && updated.status === 'contacted') {
+        setCounts((c) => ({ ...c, new: Math.max(0, (c.new || 0) - 1), contacted: (c.contacted || 0) + 1 }))
+      }
+      toast.success('Reply sent', `Emailed to ${updated.email}. Their answer will land in your inbox.`)
+      setReplyTo(null)
+    } catch (err) {
+      if (handleAuthError(err)) return
+      setReplyError(err.message || 'The email could not be sent. Please try again.')
+    } finally {
+      setSending(false)
     }
   }
 
@@ -371,6 +409,13 @@ export default function AdminEnquiries() {
                             {row.email ? ` · ${row.email}` : ''}
                           </span>
                           {row.message && <span className="rk-adm-table__sub">{row.message}</span>}
+                          {row.replies?.length > 0 && (
+                            <span className="rk-adm-table__sub rk-adm-replied">
+                              <MdReply aria-hidden="true" />
+                              Replied {row.replies.length === 1 ? 'once' : `${row.replies.length} times`} · last{' '}
+                              {formatDate(row.replies[row.replies.length - 1].sentAt)}
+                            </span>
+                          )}
                         </td>
                         <td data-label="Interested in">
                           {row.propertyTitle ? (
@@ -403,17 +448,15 @@ export default function AdminEnquiries() {
                             >
                               <MdWhatsapp aria-hidden="true" />
                             </a>
-                            {row.email && (
-                              <a
-                                href={`mailto:${row.email}?subject=${encodeURIComponent(
-                                  'Rama Kripa Estates — your property enquiry'
-                                )}`}
-                                title={`Email ${row.name}`}
-                                aria-label={`Email ${row.name}`}
-                              >
-                                <MdMailOutline aria-hidden="true" />
-                              </a>
-                            )}
+                            <button
+                              type="button"
+                              onClick={() => openReply(row)}
+                              disabled={!row.email}
+                              title={row.email ? `Reply to ${row.name} by email` : 'No email given — call or WhatsApp'}
+                              aria-label={row.email ? `Reply to ${row.name} by email` : 'No email address on this enquiry'}
+                            >
+                              <MdMailOutline aria-hidden="true" />
+                            </button>
                           </span>
                         </td>
                         <td data-label="Status">
@@ -540,6 +583,85 @@ export default function AdminEnquiries() {
           The enquiry from <strong>{pendingDelete?.name}</strong> ({pendingDelete?.phone}) will be
           permanently removed. Export the CSV first if you need a record of it.
         </p>
+      </Modal>
+
+      <Modal
+        open={Boolean(replyTo)}
+        onClose={() => (sending ? null : setReplyTo(null))}
+        title={replyTo ? `Reply to ${replyTo.name}` : 'Reply'}
+        size="md"
+        footer={
+          <>
+            <button
+              type="button"
+              className="rk-btn rk-btn--ghost rk-btn--sm"
+              onClick={() => setReplyTo(null)}
+              disabled={sending}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              form="rk-enquiry-reply"
+              className="rk-btn rk-btn--gold rk-btn--sm"
+              disabled={sending || !replyText.trim()}
+            >
+              {sending ? 'Sending…' : 'Send reply'}
+            </button>
+          </>
+        }
+      >
+        {replyTo && (
+          <form id="rk-enquiry-reply" onSubmit={sendReply} noValidate>
+            <p className="rk-adm-note" style={{ marginTop: 0 }}>
+              To <strong>{replyTo.email}</strong>. If they answer, it lands in your inbox.
+            </p>
+
+            <div className="rk-adm-quote">
+              <span className="rk-adm-quote__head">
+                {replyTo.name} wrote · {formatDate(replyTo.createdAt)}
+                {replyTo.propertyTitle ? ` · ${replyTo.propertyTitle}` : ''}
+              </span>
+              {replyTo.message ? (
+                <span className="rk-adm-quote__body">{replyTo.message}</span>
+              ) : (
+                <span className="rk-adm-quote__body rk-adm-note">(no message — just the form details)</span>
+              )}
+            </div>
+
+            {replyTo.replies?.length > 0 && (
+              <div className="rk-adm-thread">
+                <span className="rk-label">Earlier replies</span>
+                {replyTo.replies.map((r) => (
+                  <div className="rk-adm-thread__item" key={r._id || r.sentAt}>
+                    <span className="rk-adm-thread__meta">
+                      {formatDate(r.sentAt)}
+                      {r.sentBy ? ` · ${r.sentBy}` : ''}
+                    </span>
+                    <span className="rk-adm-thread__body">{r.message}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <Field
+              as="textarea"
+              label="Your reply"
+              name="reply-message"
+              rows={7}
+              value={replyText}
+              onChange={(e) => {
+                setReplyText(e.target.value)
+                if (replyError) setReplyError('')
+              }}
+              error={replyError}
+              hint={`${replyText.length}/4000 characters. The enquiry is quoted underneath automatically.`}
+              placeholder={`Hi ${replyTo.name}, thanks for your interest in ${replyTo.propertyTitle || 'Faridabad property'}. `}
+              autoFocus
+              required
+            />
+          </form>
+        )}
       </Modal>
     </div>
   )

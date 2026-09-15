@@ -202,6 +202,8 @@ export const api = {
       apiSend(`/enquiries/${encodeURIComponent(id)}`, 'PATCH', payload, token),
     deleteEnquiry: (id, token) =>
       apiSend(`/enquiries/${encodeURIComponent(id)}`, 'DELETE', undefined, token),
+    replyToEnquiry: (id, payload, token) =>
+      apiSend(`/enquiries/${encodeURIComponent(id)}/reply`, 'POST', payload, token),
 
     blogs: (params, token) => apiGet('/blogs', params, { token }),
     createBlog: (payload, token) => apiSend('/blogs', 'POST', payload, token),

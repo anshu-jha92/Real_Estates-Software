@@ -31,3 +31,9 @@ export const deleteEnquiry = asyncHandler(async (req, res) => {
   const data = await enquiryService.deleteEnquiry(req.params.id);
   res.json({ success: true, message: 'Enquiry deleted.', data });
 });
+
+/** POST /api/enquiries/:id/reply [admin] { message } - email the visitor back. */
+export const replyToEnquiry = asyncHandler(async (req, res) => {
+  const data = await enquiryService.replyToEnquiry(req.params.id, req.body || {}, req.user?.name || '');
+  res.json({ success: true, message: `Reply sent to ${data.email}.`, data });
+});

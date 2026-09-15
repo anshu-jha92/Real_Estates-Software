@@ -45,6 +45,8 @@ services:
       - key: SMTP_PASS
         sync: false
       - key: MAIL_FROM
-        value: noreply@ramakripaestate.com
+        sync: false                 # "Rama Kripa Estates <owner@gmail.com>" or a verified-domain address
+      - key: NOTIFY_EMAIL
+        sync: false                 # the owner's inbox for new enquiries and visitors' replies
       # ADMIN_* are only used by `npm run seed`, which you will not run on Render —
       # the live Atlas database already has your admin user. Left out on purpose.

@@ -901,3 +901,48 @@ a.rk-adm-tile:focus-visible {
 .rk-adm-stars .is-on {
   color: var(--rk-gold-500);
 }
+
+/* ------------------------------------------------------------------ */
+/* Enquiry reply modal                                                  */
+/* ------------------------------------------------------------------ */
+
+.rk-adm-replied {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--rk-green-700);
+}
+.rk-adm-replied svg { font-size: .95rem; }
+
+/* The visitor's original message, quoted above the reply box. */
+.rk-adm-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--rk-gold-500);
+  border-radius: 0 var(--rk-r-sm) var(--rk-r-sm) 0;
+  background: var(--rk-cream);
+}
+.rk-adm-quote__head { font-size: .74rem; font-weight: 700; color: var(--rk-muted); }
+.rk-adm-quote__body { font-size: .9rem; color: var(--rk-body); white-space: pre-wrap; }
+
+/* Replies already sent, oldest first. */
+.rk-adm-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.rk-adm-thread__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-r-sm);
+  background: var(--rk-white);
+}
+.rk-adm-thread__meta { font-size: .72rem; font-weight: 700; color: var(--rk-muted); }
+.rk-adm-thread__body { font-size: .88rem; color: var(--rk-body); white-space: pre-wrap; }

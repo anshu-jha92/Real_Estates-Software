@@ -9,7 +9,7 @@ import Enquiry, { ENQUIRY_STATUSES } from '../models/Enquiry.js';
 import Property from '../models/Property.js';
 import { buildPagination, paginated, escapeRegex } from '../utils/apiFeatures.js';
 import { badRequest, notFound } from '../utils/AppError.js';
-import { notifyOwner, sendEnquirerReply } from './mailService.js';
+import { notifyOwner, sendEnquirerReply, sendOwnerReply } from './mailService.js';
 
 const missing = () => notFound('Enquiry not found.');
 
@@ -54,12 +54,13 @@ export async function createEnquiry(input = {}, meta = {}) {
   const enquiry = await Enquiry.create(payload);
   const doc = enquiry.toObject();
 
-  // Fire-and-forget emails: send to owner and to enquirer if email provided.
-  // Errors are logged but don't fail the enquiry creation.
-  notifyOwner(doc).catch((err) => console.error('[enquiry] Mail to owner failed:', err.message));
-  sendEnquirerReply(doc).catch((err) =>
-    console.error('[enquiry] Mail to enquirer failed:', err.message)
-  );
+  // Fire-and-forget emails; a failure is logged, never surfaced to the visitor.
+  // Sent one after the other rather than in parallel: some SMTP relays (the
+  // Mailtrap sandbox among them) reject two sends in the same second.
+  notifyOwner(doc)
+    .catch((err) => console.error('[enquiry] Mail to owner failed:', err.message))
+    .then(() => sendEnquirerReply(doc))
+    .catch((err) => console.error('[enquiry] Mail to enquirer failed:', err.message));
 
   return enquiry;
 }
@@ -110,6 +111,38 @@ export async function updateEnquiry(id, changes = {}) {
 
   if (!enquiry) throw missing();
   return enquiry;
+}
+
+const REPLY_MAX = 4000;
+
+/**
+ * Email the team's answer to the visitor and keep a copy on the enquiry.
+ * The send is awaited on purpose — the admin is watching the button, so a
+ * mail failure must surface instead of being swallowed.
+ */
+export async function replyToEnquiry(id, { message } = {}, sentBy = '') {
+  const text = String(message || '').trim();
+  if (!text) throw badRequest('Write a reply first.', { message: 'The reply cannot be empty' });
+  if (text.length > REPLY_MAX) {
+    throw badRequest(`Keep the reply under ${REPLY_MAX} characters.`, {
+      message: `Maximum ${REPLY_MAX} characters`,
+    });
+  }
+
+  const enquiry = await Enquiry.findById(id);
+  if (!enquiry) throw missing();
+  if (!enquiry.email) {
+    throw badRequest('This enquiry has no email address. Call or WhatsApp them instead.');
+  }
+
+  await sendOwnerReply(enquiry.toObject(), text, sentBy);
+
+  enquiry.replies.push({ message: text, sentTo: enquiry.email, sentBy });
+  // A reply is the clearest sign a lead has been contacted.
+  if (enquiry.status === 'new') enquiry.status = 'contacted';
+  await enquiry.save();
+
+  return enquiry.toObject();
 }
 
 export async function deleteEnquiry(id) {

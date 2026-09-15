@@ -47,6 +47,22 @@ const enquirySchema = new mongoose.Schema(
 
     ip: { type: String, trim: true, default: '' },
     userAgent: { type: String, trim: true, default: '' },
+
+    /** Every reply the team has emailed from the panel, oldest first. */
+    replies: {
+      type: [
+        new mongoose.Schema(
+          {
+            message: { type: String, required: true, trim: true, maxlength: 4000 },
+            sentTo: { type: String, trim: true, default: '' },
+            sentBy: { type: String, trim: true, default: '' },
+            sentAt: { type: Date, default: Date.now },
+          },
+          { _id: true }
+        ),
+      ],
+      default: [],
+    },
   },
   { timestamps: true }
 );

@@ -5,6 +5,7 @@ import {
   listEnquiries,
   updateEnquiry,
   deleteEnquiry,
+  replyToEnquiry,
 } from '../controllers/enquiryController.js';
 import { protect, adminOnly } from '../middleware/auth.js';
 
@@ -28,6 +29,7 @@ router.post('/', enquiryLimiter, createEnquiry);
 
 router.get('/', protect, adminOnly, listEnquiries);
 router.patch('/:id', protect, adminOnly, updateEnquiry);
+router.post('/:id/reply', protect, adminOnly, replyToEnquiry);
 router.delete('/:id', protect, adminOnly, deleteEnquiry);
 
 export default router;
