@@ -8,6 +8,12 @@ import './FloatingActions.css'
 const WHATSAPP_TEXT =
   'Hello Rama Kripa Estates, I saw your website and would like to discuss a property in Faridabad.'
 
+/** The page they were on, so the office sees a preview card of it, not a bare hello. */
+const messageWithPage = () =>
+  typeof window === 'undefined' ? WHATSAPP_TEXT : `${WHATSAPP_TEXT}
+
+${window.location.href}`
+
 /**
  * Fixed bottom-right stack: WhatsApp, call, and a back-to-top button that
  * appears after 500px of scroll. Safe-area aware so it clears the iOS home bar.
@@ -45,7 +51,7 @@ export default function FloatingActions() {
       {settings.whatsapp && (
         <a
           className="rk-fab__btn rk-fab__btn--whatsapp"
-          href={whatsappHref(settings.whatsapp, WHATSAPP_TEXT)}
+          href={whatsappHref(settings.whatsapp, messageWithPage())}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat with Rama Kripa Estates on WhatsApp"

@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
@@ -8,6 +8,7 @@ import morgan from 'morgan';
 import connectDB from './config/db.js';
 import routes from './routes/index.js';
 import { notFound, errorHandler } from './middleware/errorHandler.js';
+import socialMeta from './middleware/socialMeta.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -59,10 +60,15 @@ if (SERVE_FRONTEND) {
       },
     })
   );
+  // Read once: a deploy restarts the process, so the file cannot go stale.
+  const INDEX_HTML = readFileSync(path.join(FRONTEND_DIST, 'index.html'), 'utf8');
+
   // Client-side routes (/properties, /property/:slug, /admin/...) all boot from index.html.
-  app.get(/^(?!\/api(\/|$)).*/, (req, res) => {
+  app.get(/^(?!\/api(\/|$)).*/, async (req, res) => {
     res.setHeader('Cache-Control', 'no-cache');
-    res.sendFile(path.join(FRONTEND_DIST, 'index.html'));
+    // Property and blog pages leave with their own og: tags, so a link shared
+    // on WhatsApp shows that listing's photo instead of the site default.
+    res.type('html').send(await socialMeta(INDEX_HTML, req));
   });
 } else {
   app.get('/', (req, res) => {

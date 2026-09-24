@@ -228,8 +228,13 @@ export default function PropertyDetail() {
 
   const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
 
+  // The link goes in the message on purpose: WhatsApp turns it into a preview
+  // card with this listing's photo and price, so the office sees at a glance
+  // which property is being asked about.
   const whatsappMessage = property
-    ? `Hello Rama Kripa Estates, I saw ${property.title} in ${locationLine(loc) || 'Faridabad'} on your website. Please share the price list and site visit slots.`
+    ? `Hello Rama Kripa Estates, I saw ${property.title} in ${locationLine(loc) || 'Faridabad'} on your website. Please share the price list and site visit slots.
+
+${shareUrl}`
     : 'Hello Rama Kripa Estates, I would like to know more about property in Faridabad.'
 
   /* ---------- SEO ---------- */
