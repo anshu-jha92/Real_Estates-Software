@@ -147,16 +147,21 @@ propertySchema.pre('validate', async function generateSlug(next) {
 });
 
 /**
- * An address but no pin: look the coordinates up once and keep them, so the
- * map shows the place that was typed instead of Google's guess at it. Given
+ * An address but no pin: look the coordinates up and keep them, so the map
+ * shows the place that was typed instead of Google's guess at it. Given
  * coordinates are never second-guessed — clearing both is how you ask for a
  * fresh lookup after moving a property's address.
+ *
+ * The lookup is tried on every save that still has no pin, not only when the
+ * address changes: a property saved before this existed, or while the address
+ * was one no map could find, is then fixed by opening it and saving again.
+ * Once a pin is stored the lookup never runs for that property.
  */
 propertySchema.pre('validate', async function fillCoordinates(next) {
   const loc = this.location;
   const pinned = loc && loc.lat != null && loc.lng != null;
 
-  if (!pinned && loc && this.isModified('location')) {
+  if (!pinned && loc) {
     const point = await geocode(loc.toObject ? loc.toObject() : loc);
     if (point) {
       loc.lat = point.lat;
