@@ -98,19 +98,22 @@ export default function ImageGallery({ images, title = 'Property', className = '
     return () => window.removeEventListener('keydown', onKey)
   }, [lightbox, prev, next])
 
-  // Keep the active thumbnail in view on narrow screens (never on first paint,
-  // which would scroll the page down to the gallery).
+  // Keep the active thumbnail in view as the slideshow advances. This scrolls
+  // ONLY the strip: scrollIntoView also scrolls every ancestor, the page
+  // included, so a visitor reading the similar properties further down was
+  // yanked back up to the gallery every few seconds.
   useEffect(() => {
     if (!didMount.current) {
       didMount.current = true
       return
     }
     const strip = stripRef.current
-    if (!strip) return
-    const active = strip.querySelector('[data-active="true"]')
-    if (active && typeof active.scrollIntoView === 'function') {
-      active.scrollIntoView({ block: 'nearest', inline: 'nearest' })
-    }
+    const active = strip?.querySelector('[data-active="true"]')
+    if (!strip || !active) return
+    const box = strip.getBoundingClientRect()
+    const item = active.getBoundingClientRect()
+    if (item.left < box.left) strip.scrollLeft -= box.left - item.left
+    else if (item.right > box.right) strip.scrollLeft += item.right - box.right
   }, [current])
 
   const onTouchStart = (event) => {
