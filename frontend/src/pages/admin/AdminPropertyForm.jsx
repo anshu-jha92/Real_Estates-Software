@@ -512,9 +512,16 @@ export default function AdminPropertyForm() {
         ? await api.admin.updateProperty(id, payload, token)
         : await api.admin.createProperty(payload, token)
 
+      // Coordinates the admin did not type mean the server found them from the
+      // address; say so, or the map moving on its own looks like a glitch.
+      const pinned =
+        !payload.location.lat && !payload.location.lng && res.data?.location?.lat
+          ? ` Map pinned from the address (${res.data.location.lat}, ${res.data.location.lng}).`
+          : ''
+
       toast.success(
         isEdit ? 'Property updated' : 'Property published',
-        `"${res.data?.title || payload.title}" is now live on ramakripaestate.com.`
+        `"${res.data?.title || payload.title}" is now live on ramakripaestate.com.${pinned}`
       )
       navigate('/admin/properties')
     } catch (err) {
@@ -862,7 +869,7 @@ export default function AdminPropertyForm() {
               step="any"
               value={form.location.lat}
               onChange={onInput('location.lat')}
-              hint="Optional — pins the map exactly. Faridabad is around 28.40."
+              hint="Leave both blank and we find them from the address. Fill them to pin the map exactly."
             />
             <Field
               label="Longitude"
@@ -871,7 +878,7 @@ export default function AdminPropertyForm() {
               step="any"
               value={form.location.lng}
               onChange={onInput('location.lng')}
-              hint="Around 77.31 for Faridabad."
+              hint="From Google Maps: right-click the spot, click the numbers to copy them."
             />
           </div>
         </Section>

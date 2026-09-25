@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { uniqueSlug } from '../utils/slugify.js';
+import geocode from '../utils/geocode.js';
 
 export const CATEGORIES = ['residential', 'commercial', 'plots', 'rent', 'office-space'];
 export const STATUSES = ['new-launch', 'under-construction', 'ready-to-move', 'resale', 'sold-out'];
@@ -142,6 +143,27 @@ propertySchema.pre('validate', async function generateSlug(next) {
     this.slug = await uniqueSlug(this.constructor, this.title, this._id);
   }
   if (!this.thumbnail && this.images?.length) this.thumbnail = this.images[0];
+  next();
+});
+
+/**
+ * An address but no pin: look the coordinates up once and keep them, so the
+ * map shows the place that was typed instead of Google's guess at it. Given
+ * coordinates are never second-guessed — clearing both is how you ask for a
+ * fresh lookup after moving a property's address.
+ */
+propertySchema.pre('validate', async function fillCoordinates(next) {
+  const loc = this.location;
+  const pinned = loc && loc.lat != null && loc.lng != null;
+
+  if (!pinned && loc && this.isModified('location')) {
+    const point = await geocode(loc.toObject ? loc.toObject() : loc);
+    if (point) {
+      loc.lat = point.lat;
+      loc.lng = point.lng;
+    }
+  }
+
   next();
 });
 
